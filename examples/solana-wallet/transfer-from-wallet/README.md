@@ -1,4 +1,4 @@
-### Example for the "Generate Secret Phrase / Solana" endpoint.
+### Example for the "Transfer from Wallet" endpoint.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 `js_example.py`: An example using the NPM package `theblockchainapi`. To get started, `run npm install theblockchainapi`.<br/><br/>
