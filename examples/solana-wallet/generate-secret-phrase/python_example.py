@@ -1,4 +1,3 @@
-import theblockchainapi
 from theblockchainapi import TheBlockchainAPIResource
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
