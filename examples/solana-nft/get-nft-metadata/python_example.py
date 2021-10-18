@@ -1,4 +1,4 @@
-from theblockchainapi import TheBlockchainAPIResource
+from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -15,8 +15,15 @@ def example():
         assert MY_API_SECRET_KEY is not None
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    print(secret_key)
+
+    nft_address = 'RyXJBHJEffBYJuXiYtvJLKC88gtPKEaY5sh8XmrgJ8x'
+    url_to_view = f"https://explorer.solana.com/address/{nft_address}?cluster=devnet"
+    print(url_to_view)
+    nft_metadata = BLOCKCHAIN_API_RESOURCE.get_nft_metadata(
+        mint_address=nft_address,
+        network=SolanaNetwork.DEVNET
+    )
+    print(nft_metadata)
 
 
 if __name__ == '__main__':

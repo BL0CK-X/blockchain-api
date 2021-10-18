@@ -15,8 +15,10 @@ def example():
         assert MY_API_SECRET_KEY is not None
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    print(secret_key)
+
+    mint_fee_response = BLOCKCHAIN_API_RESOURCE.get_nft_mint_fee()
+    print("Lamport Fee:", mint_fee_response['nft_mint_fee_estimate_lamports'])
+    print("Fee Description:", mint_fee_response['description'])
 
 
 if __name__ == '__main__':

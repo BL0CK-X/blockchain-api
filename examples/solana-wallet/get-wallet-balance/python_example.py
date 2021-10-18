@@ -17,6 +17,10 @@ def example():
         raise Exception("Fill in your key ID pair!")
     secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
     print(secret_key)
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(secret_key)
+    print(public_key)
+    result = BLOCKCHAIN_API_RESOURCE.get_balance(public_key)
+    print(result)
 
 
 if __name__ == '__main__':

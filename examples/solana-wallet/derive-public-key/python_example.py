@@ -15,8 +15,10 @@ def example():
         assert MY_API_SECRET_KEY is not None
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    print(secret_key)
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
+        secret_recovery_phrase='sadness swap zebra path panda power finger robot yellow game list enemy',
+    )
+    print(public_key)
 
 
 if __name__ == '__main__':
