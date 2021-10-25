@@ -1,5 +1,7 @@
 ### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Wallet/paths/~1v1~1solana~1wallet~1transfer/post">"Transfer from Wallet" endpoint</a>.
 
+This shows how to transfer an NFT, but you can also use this example to transfer any SPL token by replacing the `token_address`.
+
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 <b>Only `python_example.py` is completed at this time.</b>
 
