@@ -1,4 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCurrencyUnit
+import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -7,6 +8,7 @@ BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
+TASK_IN_PROGRESS_STATUS_CODE = 202
 
 
 def example():
@@ -36,6 +38,7 @@ def example():
     print(BLOCKCHAIN_API_RESOURCE.get_balance(public_key, SolanaCurrencyUnit.SOL, SolanaNetwork.DEVNET))
 
     # Creates a test candy machine with 2 available to mint
+    # NOTE: This endpoint is unstable. It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
@@ -43,20 +46,42 @@ def example():
         network=SolanaNetwork.DEVNET
     )
 
-    print(candy_machine_id)
+    print("candy_machine_id", candy_machine_id)
     url_to_view = f"https://explorer.solana.com/address/{candy_machine_id}?cluster={network.value}"
-    print(url_to_view)
+    print("View candy machine ID here:", url_to_view)
 
     # Now mint an NFT from the candy machine
-    mint_transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
+    task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
         passphrase=pass_phrase,
         network=SolanaNetwork.DEVNET,
         candy_machine_id=candy_machine_id
     )
-    print(mint_transaction_signature)
-    url_to_view = f"https://explorer.solana.com/tx/{mint_transaction_signature}?cluster={network.value}"
+
+    # We get a task ID. Now we have to wait for this task to complete.
+    print("task_id", task_id)
+
+    time_slept = 0
+    time_to_sleep = 30
+
+    while True:
+        response = BLOCKCHAIN_API_RESOURCE.get_task(task_id)
+
+        if response['status_code'] == TASK_IN_PROGRESS_STATUS_CODE:
+            # 202 = In Progress
+            # This task might take 180 seconds to show as completed.
+            print(f"Sleeping for {time_to_sleep} seconds... Have already slept for {time_slept} seconds.")
+            time.sleep(time_to_sleep)
+            time_slept += time_to_sleep
+            continue
+        else:
+            break
+
+    # Parse the response
+    print(response)
+    transaction_signature = response['response']['transaction_signature']
+    url_to_view = f"https://explorer.solana.com/tx/{transaction_signature}?cluster={network.value}"
     print(url_to_view)
 
 
