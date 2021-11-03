@@ -70,7 +70,7 @@ def example():
 
         if response['status_code'] == TASK_IN_PROGRESS_STATUS_CODE:
             # 202 = In Progress
-            # This task might take 180 seconds to show as completed.
+            # This task might take 180 seconds to show as completed. It might take as long as 300 seconds.
             print(f"Sleeping for {time_to_sleep} seconds... Have already slept for {time_slept} seconds.")
             time.sleep(time_to_sleep)
             time_slept += time_to_sleep
