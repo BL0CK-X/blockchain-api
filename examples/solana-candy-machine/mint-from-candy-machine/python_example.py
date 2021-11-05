@@ -2,8 +2,8 @@ from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCurr
 import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = "dRBKlArlsFs86t5"
+MY_API_SECRET_KEY = "sLvOLRkFI5DxfRl"
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -86,4 +86,30 @@ def example():
 
 
 if __name__ == '__main__':
-    example()
+    # example()
+    import threading
+
+    def to_thread():
+        start_ = int(time.time())
+        task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
+            secret_recovery_phrase="secret_recovery_phrase",
+            derivation_path="derivation_path",
+            passphrase="pass_phrase",
+            network=SolanaNetwork.DEVNET,
+            candy_machine_id="candy_machine_id"
+        )
+        print(task_id)
+        end_ = int(time.time())
+        print(f"{task_id}: {end_ - start_}")
+
+    start = int(time.time())
+    threads = list()
+    for _ in range(50):
+        x = threading.Thread(target=to_thread)
+        x.start()
+
+    for thread in threads:
+        thread.join()
+
+    end = int(time.time())
+    print(f"Final: {end - start}")
