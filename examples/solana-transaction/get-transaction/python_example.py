@@ -1,4 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
+import json
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -16,14 +17,15 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    nft_address = '2pQPtnFm2mgXZrVWyNdcf5Qf2TWBGkTAeKZJhPjsc7Jn'
-    url_to_view = f"https://explorer.solana.com/address/{nft_address}?cluster=devnet"
-    print(url_to_view)
-    nft_metadata = BLOCKCHAIN_API_RESOURCE.get_nft_metadata(
-        mint_address=nft_address,
+    # This is the transaction signature for a transaction that lists an NFT on SolSea.
+    tx_signature = "5wHu1qwD7q5ifaN5nwdcDqNFo53GJqa7nLp2BeeEpcHCusb4GzARz4GjgzsEHMkBMgCJMGa6GSQ1VG96Exv8kt2W"
+
+    transaction_info = BLOCKCHAIN_API_RESOURCE.get_solana_transaction(
+        tx_signature=tx_signature,
         network=SolanaNetwork.MAINNET_BETA
     )
-    print(nft_metadata)
+
+    print(json.dumps(transaction_info, indent=4, sort_keys=True))
 
 
 if __name__ == '__main__':

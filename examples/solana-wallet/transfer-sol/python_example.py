@@ -1,8 +1,8 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = 'DiAAzTdnXJbWWPx'
-MY_API_SECRET_KEY = 'VtyRuAu9MvWb7Em'
+MY_API_KEY_ID = None
+MY_API_SECRET_KEY = None
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -24,10 +24,10 @@ def example():
     print(f"Public Key: {public_key}")
     print(f"Secret Key: {secret_key}")
 
-    # Get an airdrop on the devnet in order to be able to mint an NFT
+    # Get an airdrop on the devnet in order to be able to transfer SOL
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
 
-    # We need to make sure this has time to process before minting the NFT!
+    # We need to make sure this has time to process before transferring SOL
     import time
     time.sleep(25)
 
@@ -43,7 +43,7 @@ def example():
     get_balance()
 
     # *** >>> TRANSFER THE SOL AIRDROP
-    # You can put your address in the `transfer_to` and receive the NFT on the devnet.
+    # You can put your address in the `transfer_to` and receive the SOL on the devnet.
     # You can view it in your Phantom wallet by going to Settings > Change Network > Devnet and then viewing
     # your SOL balance.
 
