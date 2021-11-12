@@ -17,11 +17,22 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     the_goat_society_candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
-    candy_machine_data = BLOCKCHAIN_API_RESOURCE.get_candy_machine_config_public_key(
+
+    # First, get the candy machine config public key
+    candy_machine_data = BLOCKCHAIN_API_RESOURCE.get_candy_machine_info(
         candy_machine_id=the_goat_society_candy_machine_id,
         network=SolanaNetwork.MAINNET_BETA
     )
-    print(f"Config Address: {candy_machine_data}")
+    print(f"Candy Machine Info: {candy_machine_data}")
+
+    config_address = candy_machine_data['config_address']
+    print(f"Config Address: {config_address}")
+
+    candy_machine_data = BLOCKCHAIN_API_RESOURCE.get_config_details(
+        config_address=config_address,
+        network=SolanaNetwork.MAINNET_BETA
+    )
+    print(f"Candy Machine Configuration: {candy_machine_data}")
 
 
 if __name__ == '__main__':

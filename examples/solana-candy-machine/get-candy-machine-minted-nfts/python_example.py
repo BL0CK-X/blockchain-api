@@ -1,0 +1,50 @@
+from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
+
+# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+MY_API_KEY_ID = None
+MY_API_SECRET_KEY = None
+BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+    api_key_id=MY_API_KEY_ID,
+    api_secret_key=MY_API_SECRET_KEY
+)
+
+
+def example():
+    try:
+        assert MY_API_KEY_ID is not None
+        assert MY_API_SECRET_KEY is not None
+    except AssertionError:
+        raise Exception("Fill in your key ID pair!")
+
+    # If you already know the candy machine ID, just enter it here.
+    the_goat_society_candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
+    minted_nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_minted_from_candy_machine(
+        candy_machine_id=the_goat_society_candy_machine_id,
+        network=SolanaNetwork.MAINNET_BETA
+    )
+    for nft in minted_nfts:
+        print(nft)
+
+    # If you don't know the candy machine ID, you can retrieve it if you have the mint address of an
+    # NFT that has been minted from the candy machine.
+    print("-" * 40)
+    nft_mint_address = '4YmE6xzXAQ1HccBbzMgJh6NLn643ySrt1iXShUibrAsB'
+
+    try:
+        candy_machine_id = BLOCKCHAIN_API_RESOURCE.get_candy_machine_id_from_nft(
+            mint_address=nft_mint_address,
+            network=SolanaNetwork.MAINNET_BETA
+        )
+        minted_nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_minted_from_candy_machine(
+            candy_machine_id=candy_machine_id,
+            network=SolanaNetwork.MAINNET_BETA
+        )
+        for nft in minted_nfts:
+            print(nft)
+    except Exception as e:
+        print("Error")
+        print(str(e))
+
+
+if __name__ == '__main__':
+    example()
