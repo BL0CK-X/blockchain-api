@@ -20,11 +20,13 @@ We have published auto-generated wrappers <a href="https://github.com/BL0CK-X/th
 
 We have not tested them. If you run into any issues, publish one <a href="https://github.com/BL0CK-X/theblockchainapi-wrappers/issues/new">here</a>.
 
-# Resources
+## Resources
+
 - Post feature requests to the issues tab this repo!
 - Check out the docs: https://docs.theblockchainapi.com
 - Dashboard: https://dashboard.theblockchainapi.com
-- Website: https://theblockchainapi.com
+- Landing Page: https://theblockchainapi.com
 - Discord: https://discord.gg/d49yzrZRAF
-- YouTube Tutorials: https://youtu.be/4A-Ti_sb-Mo
+- YouTube Tutorials: https://www.youtube.com/channel/UCtZh22T-0gjNlPi2FWeoRWg
 - Contact Page: https://dashboard.theblockchainapi.com/contact
+- Pricing/Billing Page: https://dashboard.theblockchainapi.com/billing
