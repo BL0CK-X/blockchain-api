@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Wallet/paths/~1v1~1solana~1wallet~1nfts/get">"Get NFTs Belonging to an Address" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Wallet/paths/~1solana~1wallet~1{network}~1{public_key}~1nfts/get">"Get NFTs Belonging to an Address" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 <b>Only `python_example.py` is completed at this time.</b>
