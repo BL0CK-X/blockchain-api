@@ -1,22 +1,26 @@
-import TheBlockchainApi from 'the-blockchain-api';
+import theblockchainapi from 'theblockchainapi';
 
-let defaultClient = TheBlockchainApi.ApiClient.instance;
+let defaultClient = theblockchainapi.ApiClient.instance;
+
+// Get a free API Key Pair: https://dashboard.theblockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'latWiyo7TuuXnQx';
+APIKeyID.apiKey = 'API-KEY-ID';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'i7VdMvuI5y74A6p';
+APISecretKey.apiKey = 'API-SECRET-KEY';
 
-let apiInstance = new TheBlockchainApi.SolanaAccountApi();
+let apiInstance = new theblockchainapi.SolanaAccountApi();
 
 let network = "mainnet-beta"; // String | The network ID (devnet, mainnet-beta)
 let publicKey = "EEr5yQpNXf7Bru6Rt5podx56HGW9CEehXqgRGh2wa71w"; // String | The public key of the account
 
-apiInstance.solanaAccountNetworkPublicKeyGet(network, publicKey, (error, data, response) => {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-  }
+const account_info = await apiInstance.solanaGetAccount(network, publicKey).then((data) => {
+  console.log('API called successfully.');
+  return data;
+}, (error) => {
+  console.error(error);
+  return null;
 });
+
+console.log("Account Info: ", account_info);
