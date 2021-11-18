@@ -11,7 +11,7 @@ Then see one of the examples in the "examples" folder.
 
 ## Javascript / Node.js (npm)
 
-`npm i the-blockchain-api`
+`npm i theblockchainapi`
 Then see one of the examples in the "examples" folder.
 
 ## Go, Java, Kotlin, PHP, Swift, and Typescript
