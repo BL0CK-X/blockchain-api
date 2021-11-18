@@ -15,8 +15,17 @@ def example():
         assert MY_API_SECRET_KEY is not None
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
+        
+    # Default uses the Phantom Derivation path
     public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
         secret_recovery_phrase='sadness swap zebra path panda power finger robot yellow game list enemy',
+    )
+    print(public_key)
+    
+    # Use an empty string to use the CLI derivation path 
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
+        secret_recovery_phrase='sadness swap zebra path panda power finger robot yellow game list enemy',
+        derivation_path=''
     )
     print(public_key)
 
