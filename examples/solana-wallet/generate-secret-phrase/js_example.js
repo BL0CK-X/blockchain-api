@@ -1,44 +1,23 @@
-import TheBlockchainApi from 'the-blockchain-api';
+import theblockchainapi from 'theblockchainapi';
 
-let defaultClient = TheBlockchainApi.ApiClient.instance;
+let defaultClient = theblockchainapi.ApiClient.instance;
 
-// Get a pair here: https://dashboard.theblockchainapi.com/api-keys
+// Get a free API Key Pair here: https://dashboard.theblockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'Cq9ZAF48Cnnabsf';
+APIKeyID.apiKey = 'gyvYjO1vP8UD481';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'JbarbHL84eOGkSF';
+APISecretKey.apiKey = '9gwcWht8U0rg5Jv';
 
-let apiInstance = new TheBlockchainApi.SolanaWalletApi();
-const req = apiInstance.solanaWalletSecretRecoveryPhrasePost(
-    (error, data, response) => {
-        if (error) {
-            console.error(error);
-            return null;
-        } else {
-            console.log('API called successfully. Returned data: ' + JSON.stringify(data));
-            return data["secret_recovery_phrase"]
-        }
-    }
-);
+let apiInstance = new theblockchainapi.SolanaWalletApi();
 
-// asfunction getProjectParameterValue() {
-//     return apiInstance.solanaWalletSecretRecoveryPhrasePost(
-//         (error, data, response) => {
-//             if (error) {
-//                 console.error(error);
-//                 resolve(null);
-//             } else {
-//                 console.log('API 22222 called successfully. Returned data: ' + JSON.stringify(data));
-//                 // resolve(data["secret_recovery_phrase"])
-//                 return data["secret_recovery_phrase"]
-//             }
-//         }
-//     );
-// }
-// const result = getProjectParameterValue();
-console.log("result", req);
-// console.log( req);
-// req.then((v)= );
-// console.log(secret_phrase);
+const new_seed_phrase = await apiInstance.solanaGenerateSecretRecoveryPhrase().then((data) => {
+  console.log('API called successfully.');
+  return data['secret_recovery_phrase'];
+}, (error) => {
+  console.error(error);
+  return null;
+});
+
+console.log(new_seed_phrase);

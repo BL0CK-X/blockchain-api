@@ -34,7 +34,7 @@ def example():
     # Get an airdrop on the devnet in order to be able to mint an NFT
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
 
-    # We need to make sure this has time to process before minting the NFT!
+    # We need to make sure the airdrops have time to process before minting the NFT!
     import time
     time.sleep(30)
 
