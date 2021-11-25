@@ -1,8 +1,8 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaMintAddresses, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = "0qiMmf8BEZYCN4E"
+MY_API_SECRET_KEY = "99t1AuOhcZHxcRQ"
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -25,6 +25,7 @@ def example():
     airdrop_tx_signature = BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
     print(airdrop_tx_signature)
     result = BLOCKCHAIN_API_RESOURCE.get_balance(public_key)
+    print(f"SOL Balance of {public_key}")
     print(result)
 
     # (2) Test get USDC balance (or any other SPL token)
@@ -37,7 +38,7 @@ def example():
         network=SolanaNetwork.MAINNET_BETA
     )
     print("-" * 20)
-    print(f"Balance of {public_key}")
+    print(f"USDC Balance of {public_key}")
     print(result)
 
 
