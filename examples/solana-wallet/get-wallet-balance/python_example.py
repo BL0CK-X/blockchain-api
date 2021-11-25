@@ -1,4 +1,4 @@
-from theblockchainapi import TheBlockchainAPIResource
+from theblockchainapi import TheBlockchainAPIResource, SolanaMintAddresses, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -20,6 +20,18 @@ def example():
     public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(secret_key)
     print(public_key)
     result = BLOCKCHAIN_API_RESOURCE.get_balance(public_key)
+    print(result)
+
+    # This is the public key of a wallet on Solana: GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ
+    # We know this public key has some amount of USDC in it already
+    public_key = 'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ'
+    result = BLOCKCHAIN_API_RESOURCE.get_balance(
+        public_key=public_key,
+        mint_address=SolanaMintAddresses.USDC_MAINNET_BETA,
+        network=SolanaNetwork.MAINNET_BETA
+    )
+    print("-" * 20)
+    print(f"Balance of {public_key}")
     print(result)
 
 
