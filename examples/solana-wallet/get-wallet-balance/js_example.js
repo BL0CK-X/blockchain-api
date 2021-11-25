@@ -82,7 +82,8 @@ console.log("SOL Balance Retrieved: ", balance_result);
 // ------- EXAMPLE #2: GET USDC BALANCE
 // We know that the public key GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ has some USDC belonging to it.
 // We have also retrieved the USDC mint address, EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v
-// You can see some popular ones here: https://github.com/BL0CK-X/solana-mint-addresses
+// You can see some popular ones here:
+// https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json
 
 const balance_request_two = new theblockchainapi.BalanceRequest(); // BalanceRequest |
 balance_request_two.public_key = 'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ';
