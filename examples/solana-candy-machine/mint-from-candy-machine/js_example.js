@@ -110,10 +110,31 @@ const candy_machine_id = await candyApiInstance.solanaCreateTestCandyMachine(opt
 
 console.log("Here is the candy machine ID.", candy_machine_id, "Now let's mint from it.")
 
+// We now need to get the configuration address to be able to send the mint API call
+
+const candy_details_request = new theblockchainapi.GetCandyDetailsRequest(); // GetCandyDetailsRequest |
+candy_details_request.candy_machine_id = candy_machine_id;
+candy_details_request.network = "devnet";
+opts = {
+  'getCandyDetailsRequest': candy_details_request
+};
+
+const candy_machine_details = await candyApiInstance.solanaGetCandyMachineDetails(opts).then((data) => {
+  console.log('API called successfully.');
+  return data;
+}, (error) => {
+  console.error(error);
+  return error;
+});
+
+const candy_machine_config_address = candy_machine_details['config_address'];
+
+console.log("Retrieved the Config Address:", candy_machine_config_address);
+
 let candyMachineApi = new theblockchainapi.SolanaCandyMachineApi();
 const request = new theblockchainapi.MintNFTRequest(); // MintNFTRequest | 
 request.secret_recovery_phrase = new_seed_phrase;
-request.candy_machine_id = candy_machine_id;
+request.config_address = candy_machine_config_address;
 request.network = 'devnet';
 
 opts = {
