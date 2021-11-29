@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Account/paths/~1solana~1account~1{network}~1{public_key}/get">"Get a Solana account's info" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaGetAccount">"Get a Solana account's info" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 

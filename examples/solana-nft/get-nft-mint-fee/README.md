@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-NFT/paths/~1solana~1nft~1mint~1fee/get">"Get NFT Mint Fee" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaGetNFTMintFee">"Get NFT Mint Fee" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 

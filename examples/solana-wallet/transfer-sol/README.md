@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Wallet/paths/~1solana~1wallet~1transfer/post">"Transfer from Wallet" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaTransfer">"Transfer from Wallet" endpoint</a>.
 
 This shows how to transfer SOL.
 

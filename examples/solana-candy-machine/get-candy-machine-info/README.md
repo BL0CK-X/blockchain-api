@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#tag/Solana-Candy-Machine/paths/~1solana~1nft~1candy_machine~1info/post">"Get a Metaplex Candy Machine's Details" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaGetCandyMachineDetails">"Get a Metaplex Candy Machine's Details" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 

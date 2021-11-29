@@ -1,4 +1,4 @@
-### Example using <a href="https://docs.theblockchainapi.com/#tag/Solana-Candy-Machine/paths/~1solana~1nft~1candy_machine~1nfts/post">"Get a candy machine's minted NFTs" endpoint</a>.
+### Example using <a href="https://docs.theblockchainapi.com/#operation/solanaGetNFTsMintedFromCandyMachine">"Get a candy machine's minted NFTs" endpoint</a>.
 
 For SolSea, you need to provide a hash table of the mints in order to verify your NFTs.
 
