@@ -1,8 +1,8 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = 'EiO1L67Wm7Pk1Jw'
-MY_API_SECRET_KEY = 'YpIaCbe7IV3BrT4'
+MY_API_KEY_ID = 'API-KEY-ID'
+MY_API_SECRET_KEY = 'API-SECRET-KEY'
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
