@@ -4,6 +4,7 @@ import time
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -37,7 +38,7 @@ def example():
 
     print(BLOCKCHAIN_API_RESOURCE.get_balance(public_key, SolanaCurrencyUnit.SOL, SolanaNetwork.DEVNET))
 
-    # Creates a test candy machine with 2 available to mint
+    # Creates a test candy machine with 5 available to mint
     # NOTE: This endpoint is unstable. It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
         secret_recovery_phrase=secret_recovery_phrase,

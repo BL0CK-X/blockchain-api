@@ -17,6 +17,7 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     the_goat_society_candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
+
     config_address = BLOCKCHAIN_API_RESOURCE.get_candy_machine_info(
         candy_machine_id=the_goat_society_candy_machine_id,
         network=SolanaNetwork.MAINNET_BETA
