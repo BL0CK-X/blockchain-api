@@ -6,7 +6,7 @@ For example usage with the API
 
 ## Python (PyPi)
 
-`pip intall theblockchainapi`
+`pip install theblockchainapi`
 Then see one of the examples in the "examples" folder.
 
 ## Javascript / Node.js (npm)
