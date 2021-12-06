@@ -12,20 +12,18 @@ APISecretKey.apiKey = 'API-SECRET-KEY';
 
 let apiInstance = new theblockchainapi.SolanaCandyMachineApi();
 
-let request = new theblockchainapi.GetMintedNFTsRequest(); // GetMintedNFTsRequest | 
-request.candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5";
-request.network = "mainnet-beta";
+let network = "mainnet-beta"; // String | The network ID (devnet, mainnet-beta)
+let candyMachineId = "FmkrvXRenCGtwBHw3VtBcExp8eTdnau97upaewF4GUEX"; // String | The ID of the candy machine
 
-let opts = {
-  'getMintedNFTsRequest': request
-};
+console.log("This takes about 45 seconds... Starting the API call...")
 
-const result = await apiInstance.solanaGetNFTsMintedFromCandyMachine(opts).then((data) => {
+const result = await apiInstance.solanaGetAllNFTsFromCandyMachine(network, candyMachineId).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
   console.error(error);
   return null;
 });
+
 
 console.log(result);

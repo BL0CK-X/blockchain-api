@@ -1,8 +1,8 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = 'EiO1L67Wm7Pk1Jw'
+MY_API_SECRET_KEY = 'YpIaCbe7IV3BrT4'
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -17,34 +17,20 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     # If you already know the candy machine ID, just enter it here.
-    the_goat_society_candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
-    minted_nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_minted_from_candy_machine(
-        candy_machine_id=the_goat_society_candy_machine_id,
+    the_god_particle_candy_machine_id = "FmkrvXRenCGtwBHw3VtBcExp8eTdnau97upaewF4GUEX"
+    print("Retrieving all NFTs from the given candy machine... This API call can take around 45 seconds...")
+    all_nfts = BLOCKCHAIN_API_RESOURCE.get_all_nfts_from_candy_machine(
+        candy_machine_id=the_god_particle_candy_machine_id,
         network=SolanaNetwork.MAINNET_BETA
     )
-    print(len(minted_nfts))
+    minted_nfts = all_nfts['minted_nfts']
+    unminted_nfts = all_nfts['unminted_nfts']
     for nft in minted_nfts:
-        print(nft)
-
-    # If you don't know the candy machine ID, you can retrieve it if you have the mint address of an
-    # NFT that has been minted from the candy machine.
-    print("-" * 40)
-    nft_mint_address = '4YmE6xzXAQ1HccBbzMgJh6NLn643ySrt1iXShUibrAsB'
-
-    try:
-        candy_machine_id = BLOCKCHAIN_API_RESOURCE.get_candy_machine_id_from_nft(
-            mint_address=nft_mint_address,
-            network=SolanaNetwork.MAINNET_BETA
-        )
-        minted_nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_minted_from_candy_machine(
-            candy_machine_id=candy_machine_id,
-            network=SolanaNetwork.MAINNET_BETA
-        )
-        for nft in minted_nfts:
-            print(nft)
-    except Exception as e:
-        print("Error")
-        print(str(e))
+        print(f"Minted: {nft}")
+    for nft in unminted_nfts:
+        print(f"Unminted: {nft}")
+    print(f"Minted NFTs: {len(minted_nfts)}")
+    print(f"Unminted NFTs: {len(unminted_nfts)}")
 
 
 if __name__ == '__main__':
