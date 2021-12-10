@@ -69,7 +69,7 @@ let opts = {
   'balanceRequest': balance_request
 };
 
-const balance_result = await apiInstance.solanaGetBalance(opts).then((data) => {
+let balance_result = await apiInstance.solanaGetBalance(opts).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
@@ -85,21 +85,43 @@ console.log("SOL Balance Retrieved: ", balance_result);
 // You can see some popular ones here:
 // https://raw.githubusercontent.com/solana-labs/token-list/main/src/tokens/solana.tokenlist.json
 
-const balance_request_two = new theblockchainapi.BalanceRequest(); // BalanceRequest |
-balance_request_two.public_key = 'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ';
-balance_request_two.mint_address = 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v';
-balance_request_two.network = 'mainnet-beta';
+const get_balance = async (public_key, mint_address) => {
+    const my_balance_request = new theblockchainapi.BalanceRequest(); // BalanceRequest |
+    my_balance_request.public_key = public_key;
+    my_balance_request.mint_address = mint_address;
+    my_balance_request.network = 'mainnet-beta';
 
-opts = {
-  'balanceRequest': balance_request_two
-};
+    const opts = {
+      'balanceRequest': my_balance_request
+    };
 
-const balance_result_two = await apiInstance.solanaGetBalance(opts).then((data) => {
-  console.log('API called successfully.');
-  return data;
-}, (error) => {
-  console.error(error);
-  return error;
-});
+    let my_balance_result = await new theblockchainapi.SolanaWalletApi().solanaGetBalance(opts).then((data) => {
+      console.log('API called successfully.');
+      return data;
+    }, (error) => {
+      console.error(error);
+      return error;
+    });
+    return my_balance_result;
+}
 
-console.log("USDC Balance Retrieved: ", balance_result_two);
+balance_result = await get_balance(
+    'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ', 'EPjFWdd5AufqSSqeM2qN1xzybapC8G4wEGGkZwyTDt1v'
+);
+console.log("USDC Balance Retrieved: ", balance_result);
+
+
+// ------- EXAMPLE #3: Get NFT Balance (Either 0 or 1)
+// We have an NFT: 4zH3Rwm1QXdfTSUqsYmeUBY4QqQmQEXJVbv4ErSK736Q
+// We know that the public key GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ DOES NOT OWN this NFT.
+// We know that the public key 31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj OWNS this NFT.
+
+balance_result = await get_balance(
+    'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ', '4zH3Rwm1QXdfTSUqsYmeUBY4QqQmQEXJVbv4ErSK736Q'
+);
+console.log("Balance should be 0 because they do NOT own the NFT. ", balance_result);
+
+balance_result = await get_balance(
+    '31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj', '4zH3Rwm1QXdfTSUqsYmeUBY4QqQmQEXJVbv4ErSK736Q'
+);
+console.log("Balance should be 1 because they do NOT own the NFT. ", balance_result);

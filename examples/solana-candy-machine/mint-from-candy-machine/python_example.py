@@ -2,8 +2,8 @@ from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCurr
 import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = '4T4TrL8B3eQcJnI'
+MY_API_SECRET_KEY = 'sBCdPsmU551ojqV'
 
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
@@ -58,14 +58,15 @@ def example():
     )
     print(candy_details)
     config_address = candy_details['config_address']
+    print("Config Address: ", config_address)
 
     # Now mint an NFT from the candy machine
     task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
+        config_address=config_address,
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
         passphrase=pass_phrase,
-        network=SolanaNetwork.DEVNET,
-        config_address=config_address
+        network=SolanaNetwork.DEVNET
     )
 
     # We get a task ID. Now we have to wait for this task to complete.
