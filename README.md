@@ -1,5 +1,7 @@
 # The Blockchain API
 
+Get an API key pair <a href="https://dashboard.theblockchainapi.com/api-keys">here</a>.
+
 Make coding with blockchains easy.
 
 For example usage with the API
