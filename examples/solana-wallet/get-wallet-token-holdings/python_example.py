@@ -3,6 +3,7 @@ from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -16,13 +17,13 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    public_key = 'BNedxPqVzNAYDfJsdCeMqegTGTTG4qbjci9WkwsXBGsx'
-    nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_belonging_to_address(
+    public_key = 'GKNcUmNacSJo4S2Kq3DuYRYRGw3sNUfJ4tyqd198t6vQ'
+    token_holdings = BLOCKCHAIN_API_RESOURCE.get_wallet_token_holdings(
         public_key,
         network=SolanaNetwork.MAINNET_BETA
     )
-    for nft in nfts:
-        print(f"Mint Address: {nft}")
+    for token_holding in token_holdings:
+        print(f"Token Holding: {token_holding}")
 
 
 if __name__ == '__main__':
