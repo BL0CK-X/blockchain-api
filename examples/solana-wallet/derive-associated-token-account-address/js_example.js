@@ -21,58 +21,50 @@ const nft_on_devnet_address = 'FmKrVEUKqnpQwGX5kbxR4HB5GZuZaGFdwKkhAKUKC5zA';
 // https://explorer.solana.com/address/SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt
 const serum_token_address = "SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt";
 
-const request = new theblockchainapi.ATARequest(); // ATARequest | 
+const request = new theblockchainapi.GetPublicKeyRequest(); // ATARequest |
 
 request.secret_recovery_phrase = 'sadness swap zebra path panda power finger robot yellow game list enemy';
 request.derivation_path = 'm/44/501/0/0';
 request.passphrase = '';
 
-// (1) ... Associated token address for an NFT on mainnet-beta
-request.token_address = nft_on_mainnet_beta_address;
-request.network = 'mainnet-beta';
+// First, derive your public key.
+// You can replace this with your public key here. This way, you won't have to provide a seed phrase.
+let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest |
+getPublicKeyRequest.secret_recovery_phrase = 'sadness swap zebra path panda power finger robot yellow game list enemy';
+getPublicKeyRequest.derivation_path = 'm/44/501/0/0';
+getPublicKeyRequest.passphrase = '';
 
-let opts = {
-  'aTARequest': request
-};
-
-let result = await apiInstance.solanaDeriveAssociatedTokenAccountAddress(opts).then((data) => {
-  return data;
+const public_key = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
+  console.log('API called successfully.');
+  return data['public_key'];
 }, (error) => {
   console.error(error);
   return null;
 });
-console.log('Associated Token Account Address for NFT on mainnet-beta: ', result['associated_token_address'])
+
+console.log("Public Key: ", public_key);
+
+
+const get_ata = async (public_key, mint_address) => {
+    return await apiInstance.solanaDeriveAssociatedTokenAccountAddress(public_key, mint_address).then((data) => {
+      console.log('API called successfully.');
+      return data['associated_token_address'];
+    }, (error) => {
+      console.error(error);
+      return null;
+    });
+}
+
+// (1) ... Associated token address for an NFT on mainnet-beta
+let ata = await get_ata(public_key, nft_on_mainnet_beta_address);
+console.log('Associated Token Account Address for NFT on mainnet-beta: ', ata);
 
 
 // (2) ... Associated token address for an NFT on devnet
-request.token_address = nft_on_devnet_address;
-request.network = 'devnet';
-
-opts = {
-  'aTARequest': request
-};
-
-result = await apiInstance.solanaDeriveAssociatedTokenAccountAddress(opts).then((data) => {
-  return data;
-}, (error) => {
-  console.error(error);
-  return null;
-});
-console.log('Associated Token Account Address for NFT on devnet: ', result['associated_token_address'])
+ata = await get_ata(public_key, nft_on_devnet_address);
+console.log('Associated Token Account Address for NFT on devnet: ', ata)
 
 
 // (3) ... Associated token address for a Serum token
-request.token_address = serum_token_address;
-request.network = 'mainnet-beta';
-
-opts = {
-  'aTARequest': request
-};
-
-result = await apiInstance.solanaDeriveAssociatedTokenAccountAddress(opts).then((data) => {
-  return data;
-}, (error) => {
-  console.error(error);
-  return null;
-});
-console.log('Associated Token Account Address for Serum on mainnet-beta: ', result['associated_token_address'])
+ata = await get_ata(public_key, serum_token_address);
+console.log('Associated Token Account Address for Serum on mainnet-beta: ', ata)
