@@ -8,4 +8,4 @@ The program in `python_example.py` retrieves the hashes needed for NFTs minted f
 
 `js_example.py`: An example using the NPM package `the-blockchain-api`. To get started, `npm install theblockchainapi`.<br/><br/>
 
-Wrappers for other languages available <a href="https://github.com/BL0CK-X/theblockchainapi-wrappers">here</a>.
+Wrappers for other languages available <a href="https://docs.theblockchainapi.com/#section/SDKs-API-Wrappers">here</a>.
