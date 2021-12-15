@@ -7,8 +7,8 @@ import time
 
 
 HEADERS = {
-    'APIKeyId': '3ORlBTLWCAVPxMw',
-    'APISecretKey': 'ghw3atTteHNOgwq'
+    'APIKeyId': None,
+    'APISecretKey': None
 }
 
 if __name__ == '__main__':
