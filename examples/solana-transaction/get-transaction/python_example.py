@@ -18,7 +18,7 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     # This is the transaction signature for a transaction that lists an NFT on SolSea.
-    tx_signature = "5wHu1qwD7q5ifaN5nwdcDqNFo53GJqa7nLp2BeeEpcHCusb4GzARz4GjgzsEHMkBMgCJMGa6GSQ1VG96Exv8kt2W"
+    tx_signature = "5H7o5YND5X7q4RgtKpmawqR9S7WuUwdnzj2uA5B7vCUvvVQVgNzk1CgMyH3duDXsapCcNgKufAeMZrijWaThCj9T"
 
     transaction_info = BLOCKCHAIN_API_RESOURCE.get_solana_transaction(
         tx_signature=tx_signature,
