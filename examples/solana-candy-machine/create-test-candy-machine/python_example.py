@@ -1,4 +1,5 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCurrencyUnit
+from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, \
+    SolanaCurrencyUnit, SolanaCandyMachineContractVersion
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -35,13 +36,16 @@ def example():
 
     print(BLOCKCHAIN_API_RESOURCE.get_balance(public_key, SolanaCurrencyUnit.SOL, SolanaNetwork.DEVNET))
 
-    # Creates a test candy machine with 2 available to mint
-    # NOTE: This endpoint is unstable. It is only meant for testing purposes.
+    # Creates a test candy machine with 5 available to mint
+    # NOTE: This endpoint is unstable for v1 candy machines. It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
         passphrase=pass_phrase,
-        network=SolanaNetwork.DEVNET
+        # include_gatekeeper=False,  # You can set this to True to include a gatekeeper. Only applies to v2
+        # candy machines. When gatekeeper is ON, our mint endpoint doesn't work.
+        network=SolanaNetwork.DEVNET,
+        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
 
     print(candy_machine_id)

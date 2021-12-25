@@ -39,9 +39,20 @@ def example():
     get_is_candy_machine(
         "3CdXPzAgY72HnaReerSXhfaJa5WiBj6ftgsTB9sv6RKJ", "Associated Token Account", SolanaNetwork.MAINNET_BETA)
 
-    # Get candy machine account
+    # Get candy machine account, v1
     get_is_candy_machine(
-        "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5", "Candy Machine Account", SolanaNetwork.MAINNET_BETA)
+        "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5", "Candy Machine Account: v1", SolanaNetwork.MAINNET_BETA
+    )
+
+    # Get candy machine account, v2
+    get_is_candy_machine(
+        "C3gQisQbf2tHdiwTJPXjV3AoYkZg6vsmKvtCkhxM9oP4", "Candy Machine Account: v2", SolanaNetwork.MAINNET_BETA
+    )
+
+    # Get candy machine account, magic-eden
+    get_is_candy_machine(
+        "8eF9sgCopyfMo5JBLCLxCdwBvU1WvKG2y56hcgdJ43Fc", "Candy Machine Account: Magic Eden v1", SolanaNetwork.MAINNET_BETA
+    )
 
     # Get a system program (wallet account, such as the public key to your wallet)
     get_is_candy_machine("31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj", "System Program", SolanaNetwork.MAINNET_BETA)

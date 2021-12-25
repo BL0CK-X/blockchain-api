@@ -1,37 +1,30 @@
-# Coming soon to the Python wrapper `theblockchainapi`. For now, we use the `requests` package.
-# pip install requests
-
-import requests
-import json
+from theblockchainapi import TheBlockchainAPIResource
 import time
 
+# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+MY_API_KEY_ID = None
+MY_API_SECRET_KEY = None
+BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+    api_key_id=MY_API_KEY_ID,
+    api_secret_key=MY_API_SECRET_KEY
+)
 
-HEADERS = {
-    'APIKeyId': None,
-    'APISecretKey': None
-}
+
+def example():
+    try:
+        assert MY_API_KEY_ID is not None
+        assert MY_API_SECRET_KEY is not None
+    except AssertionError:
+        raise Exception("Fill in your key ID pair!")
+
+    current_time = int(time.time())
+    result = BLOCKCHAIN_API_RESOURCE.list_all_candy_machines()
+    print(result.keys())
+    print(f"Last updated approx. {(current_time - result['last_updated']) // 60} minutes ago.")
+    print(f"There are a total of {len(result['config_addresses_v1'])} V1 candy machines.")
+    print(f"There are a total of {len(result['config_addresses_v2'])} V2 candy machines.")
+    print(f"There are a total of {len(result['config_addresses_magic-eden-v1'])} Magic Eden candy machines.")
+
 
 if __name__ == '__main__':
-
-        if HEADERS['APIKeyId'] is None or HEADERS['APISecretKey'] is None:
-            raise Exception("Fill in your API keys.")
-
-        response = requests.get(
-            url='https://api.theblockchainapi.com/v1/solana/nft/candy_machine/list',
-            headers=HEADERS
-        )
-
-        if response.status_code == 401:
-            raise Exception("Invalid API keys.")
-        elif response.status_code != 200:
-            raise Exception(f"Unknown error. {response.status_code}")
-
-        result = response.json()
-
-        print("The list of all candy machine configuration addresses on Solana mainnet-beta: ")
-        print(json.dumps(result, indent=4, sort_keys=True))
-
-        last_updated = result['last_updated']
-        current_time = int(time.time())
-        print(f"Last updated approx. {(current_time - last_updated) // 60} minutes ago.")
-        print(f"There are a total of {len(result['config_addresses'])} candy machines.")
+    example()

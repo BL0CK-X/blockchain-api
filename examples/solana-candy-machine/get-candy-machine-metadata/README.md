@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaGetNFTsMintedFromCandyMachine">"Get a candy machine's minted NFTs" endpoint</a>.
+### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaGetCandyMachineMetadata">"Get a Metaplex Candy Machine's metadata" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 
