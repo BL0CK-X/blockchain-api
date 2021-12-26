@@ -1,9 +1,10 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCurrencyUnit
+from theblockchainapi import TheBlockchainAPIResource, \
+    SolanaNetwork, SolanaCurrencyUnit, SolanaCandyMachineContractVersion
 import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = 'gRs2aqZqmrdohVX'
+MY_API_SECRET_KEY = 'KKwqHenqSiqulDh'
 
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
@@ -44,55 +45,52 @@ def example():
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
         passphrase=pass_phrase,
-        network=SolanaNetwork.DEVNET
+        network=SolanaNetwork.DEVNET,
+        # include_gatekeeper=True,  # including gatekeeper will cause the tx to NOT succeed
+        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
 
     print("candy_machine_id", candy_machine_id)
     url_to_view = f"https://explorer.solana.com/address/{candy_machine_id}?cluster={network.value}"
-    print("View candy machine ID here:", url_to_view)
+    print("View candy machine here:", url_to_view)
 
     # Now get the config_address of the candy machine
-    candy_details = BLOCKCHAIN_API_RESOURCE.get_candy_machine_info(
+    candy_details = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
         candy_machine_id=candy_machine_id,
-        network=SolanaNetwork.DEVNET
+        network=SolanaNetwork.DEVNET,
+        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
     print(candy_details)
+    print("Candy Machine Metadata: ", candy_details)
     config_address = candy_details['config_address']
     print("Config Address: ", config_address)
 
     # Now mint an NFT from the candy machine
-    task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
+    transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
         config_address=config_address,
         secret_recovery_phrase=secret_recovery_phrase,
         derivation_path=derivation_path,
         passphrase=pass_phrase,
-        network=SolanaNetwork.DEVNET
+        network=SolanaNetwork.DEVNET,
+        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
 
     # We get a task ID. Now we have to wait for this task to complete.
-    print("task_id", task_id)
+    print("transaction_signature", transaction_signature)
 
-    time_slept = 0
-    time_to_sleep = 30
+    # The transaction takes about 30-60 seconds to confirm...
+    print("Sleeping for 30 seconds while the transaction is confirmed.")
+    time.sleep(30)
 
-    while True:
-        response = BLOCKCHAIN_API_RESOURCE.get_task(task_id)
+    transaction_info = BLOCKCHAIN_API_RESOURCE.get_solana_transaction(
+        tx_signature=transaction_signature,
+        network=SolanaNetwork.DEVNET
+    )
+    did_succeed = transaction_info['result']['meta']['err'] is None
+    print(f"Did the tx succeed? {did_succeed}")
 
-        if response['status_code'] == TASK_IN_PROGRESS_STATUS_CODE:
-            # 202 = In Progress
-            # This task might take 100 seconds to show as completed.
-            print(f"Sleeping for {time_to_sleep} seconds... Have already slept for {time_slept} seconds.")
-            time.sleep(time_to_sleep)
-            time_slept += time_to_sleep
-            continue
-        else:
-            break
-
-    # Parse the response
-    print(response)
-    transaction_signature = response['response']['transaction_signature']
     url_to_view = f"https://explorer.solana.com/tx/{transaction_signature}?cluster={network.value}"
-    print(url_to_view)
+    print(f"You can view the transaction here: {url_to_view}")
 
 
 def minting_bot():
@@ -106,7 +104,8 @@ def minting_bot():
             derivation_path="derivation_path",
             passphrase="pass_phrase",
             network=SolanaNetwork.DEVNET,
-            config_address="config_address"
+            config_address="config_address",
+            candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
         )
         print(task_id)
         end_ = int(time.time())
