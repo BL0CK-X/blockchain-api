@@ -3,8 +3,8 @@ from theblockchainapi import TheBlockchainAPIResource, \
 import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
-MY_API_KEY_ID = 'gRs2aqZqmrdohVX'
-MY_API_SECRET_KEY = 'KKwqHenqSiqulDh'
+MY_API_KEY_ID = None
+MY_API_SECRET_KEY = None
 
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
