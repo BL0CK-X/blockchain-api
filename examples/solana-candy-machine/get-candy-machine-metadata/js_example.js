@@ -10,21 +10,43 @@ APIKeyID.apiKey = 'API-KEY-ID';
 let APISecretKey = defaultClient.authentications['APISecretKey'];
 APISecretKey.apiKey = 'API-SECRET-KEY';
 
-const request = new theblockchainapi.GetCandyDetailsRequest(); // GetCandyDetailsRequest | 
+let apiInstance = new theblockchainapi.SolanaCandyMachineApi();
+let request = new theblockchainapi.GetCandyMetadataRequest() // GetCandyMetadataRequest |
+
+// V1 candy machine
 request.candy_machine_id = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5";
 request.network = "mainnet-beta";
 
-let apiInstance = new theblockchainapi.SolanaCandyMachineApi();
 let opts = {
-  'getCandyDetailsRequest': request
+  'getCandyMetadataRequest': request
 };
 
-const result = await apiInstance.solanaGetCandyMachineDetails(opts).then((data) => {
-  console.log('API called successfully.');
-  return data;
+let result = await apiInstance.solanaGetCandyMachineMetadata(opts).then((data) => {
+    console.log('API called successfully.');
+    return data;
 }, (error) => {
-  console.error(error);
-  return error;
+    console.error(error);
+    return null;
 });
 
-console.log(result);
+console.log("V1 CANDY MACHINE", result);
+
+
+// V2 candy machine
+request.candy_machine_id = "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1";
+request.network = "mainnet-beta";
+request.candy_machine_contract_version = 'v2'; // You have to specify the version. You can find the version here: https://docs.theblockchainapi.com/#operation/solanaGetAccountIsCandyMachine
+
+opts = {
+  'getCandyMetadataRequest': request
+};
+
+result = await apiInstance.solanaGetCandyMachineMetadata(opts).then((data) => {
+    console.log('API called successfully.');
+    return data;
+}, (error) => {
+    console.error(error);
+    return null;
+});
+
+console.log("V2 CANDY MACHINE", result);

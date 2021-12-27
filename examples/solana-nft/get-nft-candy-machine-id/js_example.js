@@ -20,12 +20,34 @@ let opts = {
   'getCandyMachineIDRequest': getCandyMachineIdRequest
 };
 
-const result = await apiInstance.solanaGetNFTsCandyMachineId(opts).then((data) => {
+// Yes, minted with a V1 candy machine.
+let result = await apiInstance.solanaGetNFTsCandyMachineId(opts).then((data) => {
   console.log('API called successfully. Returned data: ' + data);
-  return data['candy_machine_id'];
+  return data;
 }, (error) => {
   console.error(error);
   return null;
 });
+console.log("Candy Machine Id:", result);
 
+// Yes, minted with a V2 candy machine.
+getCandyMachineIdRequest.mint_address = '63k8TCFNfQigyCfR4hvZg5moHZQ2uJYnfsuoDnrjHyeb';
+result = await apiInstance.solanaGetNFTsCandyMachineId(opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+  return data;
+}, (error) => {
+  console.error(error);
+  return null;
+});
+console.log("Candy Machine Id:", result);
+
+// No, not minted with a candy machine ID.
+getCandyMachineIdRequest.mint_address = 'GoxY1RhbuVwvQAWJ9DMT2PZWNJR6peQCy8cuKJHvb44e';
+result = await apiInstance.solanaGetNFTsCandyMachineId(opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+  return data;
+}, (error) => {
+  console.error(error['body']['error_message']);
+  return null;
+});
 console.log("Candy Machine Id:", result);

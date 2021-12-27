@@ -5,10 +5,10 @@ let defaultClient = theblockchainapi.ApiClient.instance;
 // Get a free API Key Pair here: https://dashboard.theblockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'gyvYjO1vP8UD481';
+APIKeyID.apiKey = 'API-KEY-ID';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = '9gwcWht8U0rg5Jv';
+APISecretKey.apiKey = 'API-SECRET-KEY';
 
 let apiInstance = new theblockchainapi.SolanaTransactionApi();
 

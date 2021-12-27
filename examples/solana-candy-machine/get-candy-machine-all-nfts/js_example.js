@@ -17,7 +17,7 @@ let candyMachineId = "FmkrvXRenCGtwBHw3VtBcExp8eTdnau97upaewF4GUEX"; // String |
 
 console.log("This takes about 45 seconds... Starting the API call...")
 
-const result = await apiInstance.solanaGetAllNFTsFromCandyMachine(network, candyMachineId).then((data) => {
+let result = await apiInstance.solanaGetAllNFTsFromCandyMachine(network, candyMachineId).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
@@ -25,5 +25,22 @@ const result = await apiInstance.solanaGetAllNFTsFromCandyMachine(network, candy
   return null;
 });
 
+console.log(result);
+
+candyMachineId = "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3"; // String | The ID of the candy machine
+// We don't have to specify whether the candy is v1 or v2 this time. It auto-detects it.
+
+console.log("This takes about 45 seconds... Starting the API call...");
+console.log(
+    "Retrieving all NFTs from a V2 candy machines... This API call can take around 45 seconds..."
+)
+
+result = await apiInstance.solanaGetAllNFTsFromCandyMachine(network, candyMachineId).then((data) => {
+  console.log('API called successfully.');
+  return data;
+}, (error) => {
+  console.error(error);
+  return null;
+});
 
 console.log(result);

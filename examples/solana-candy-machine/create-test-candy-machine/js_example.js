@@ -93,7 +93,8 @@ await getBalance();
 await new Promise(r => setTimeout(r, 30000));
 
 const candy_request = new theblockchainapi.CreateTestCandyMachineRequest(); // CreateTestCandyMachineRequest |
-candy_request.secret_recovery_phrase = new_seed_phrase; 
+candy_request.secret_recovery_phrase = new_seed_phrase;
+candy_request.candy_machine_contract_version = 'v2';
 
 let candyApiInstance = new theblockchainapi.SolanaCandyMachineApi();
 opts = {
@@ -108,5 +109,7 @@ const candy_machine_id = await candyApiInstance.solanaCreateTestCandyMachine(opt
   return null;
 });
 
-console.log("Here is the candy machine ID. You can now mint from this using the ID (See our 'Mint from Candy Machine' endpoint): ", candy_machine_id)
+console.log(
+    "Here is the candy machine ID for a v2 candy machine. You can now mint from this using the ID (See our 'Mint from Candy Machine' endpoint): ", candy_machine_id
+)
 
