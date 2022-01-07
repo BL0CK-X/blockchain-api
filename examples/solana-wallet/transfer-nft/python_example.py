@@ -1,4 +1,4 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit
+from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaWallet, DerivationPath
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -17,12 +17,17 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     # Create a wallet
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
-        secret_recovery_phrase=secret_key
+    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
+    wallet = SolanaWallet(
+        secret_recovery_phrase=secret_recovery_phrase,
+        derivation_path=DerivationPath.CLI_PATH,
+        passphrase=str(),
+        private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
+        b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
     )
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
     print(f"Public Key: {public_key}")
-    print(f"Secret Key: {secret_key}")
+    print(f"Secret Recovery Phrase: {secret_recovery_phrase}")
 
     # Get an airdrop on the devnet in order to be able to mint an NFT
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
@@ -38,7 +43,7 @@ def example():
 
     # Mint an NFT
     nft = BLOCKCHAIN_API_RESOURCE.create_nft(
-        secret_recovery_phrase=secret_key,
+        wallet=wallet,
         nft_name="The Blockchain API",
         nft_symbol="BLOCKX",
         nft_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg"
@@ -52,7 +57,7 @@ def example():
     # your collectibles.
     transfer_to = "31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj"
     transaction_signature = BLOCKCHAIN_API_RESOURCE.transfer(
-        secret_recovery_phrase=secret_key,
+        wallet=wallet,
         recipient_address=transfer_to,
         token_address=nft['mint']
     )

@@ -1,5 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, \
-    SolanaNetwork, SolanaCurrencyUnit, SolanaCandyMachineContractVersion
+    SolanaNetwork, SolanaCurrencyUnit, SolanaCandyMachineContractVersion, SolanaWallet, DerivationPath
 import time
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
@@ -22,15 +22,15 @@ def example():
 
     # Create a new wallet
     network = SolanaNetwork.DEVNET
-    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    derivation_path = str()
-    pass_phrase = str()
-    print(secret_recovery_phrase)
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
-        secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase
+    wallet = SolanaWallet(
+        secret_recovery_phrase=BLOCKCHAIN_API_RESOURCE.generate_secret_key(),
+        derivation_path=DerivationPath.CLI_PATH,
+        passphrase=str(),
+        private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
+        b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
     )
+
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
     print(public_key)
 
     for _ in range(3):
@@ -42,9 +42,7 @@ def example():
     # Creates a test candy machine with 5 available to mint
     # NOTE: This endpoint is unstable. It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
-        secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase,
+        wallet=wallet,
         network=SolanaNetwork.DEVNET,
         # include_gatekeeper=True,  # including gatekeeper will cause the tx to NOT succeed
         candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
@@ -68,9 +66,7 @@ def example():
     # Now mint an NFT from the candy machine
     transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
         config_address=config_address,
-        secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase,
+        wallet=wallet,
         network=SolanaNetwork.DEVNET,
         candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
@@ -86,6 +82,7 @@ def example():
         tx_signature=transaction_signature,
         network=SolanaNetwork.DEVNET
     )
+    print(transaction_info)
     did_succeed = transaction_info['result']['meta']['err'] is None
     print(f"Did the tx succeed? {did_succeed}")
 
@@ -97,12 +94,19 @@ def minting_bot():
     # An NFT minting bot
     import threading
 
-    def to_thread():
+    wallet = SolanaWallet(
+        secret_recovery_phrase=BLOCKCHAIN_API_RESOURCE.generate_secret_key(),
+        derivation_path=DerivationPath.CLI_PATH,
+        passphrase=str(),
+        private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
+        b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
+    )
+
+    def to_thread(my_wallet):
         start_ = int(time.time())
+
         task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
-            secret_recovery_phrase="secret_recovery_phrase",
-            derivation_path="derivation_path",
-            passphrase="pass_phrase",
+            wallet=my_wallet,
             network=SolanaNetwork.DEVNET,
             config_address="config_address",
             candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
@@ -114,7 +118,7 @@ def minting_bot():
     start = int(time.time())
     threads = list()
     for _ in range(50):
-        x = threading.Thread(target=to_thread)
+        x = threading.Thread(target=to_thread, args=(wallet, ))
         x.start()
 
     for thread in threads:

@@ -15,12 +15,23 @@ def example():
         assert MY_API_SECRET_KEY is not None
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
-    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    print(secret_recovery_phrase)
+
+    private_key = BLOCKCHAIN_API_RESOURCE.generate_private_key()
+
+    b58_private_key = private_key['b58_private_key']
+    print("This is a base58-encoded private key. This is what Phantom shows when you click `Show Private Key`")
+    print(b58_private_key)
+
+    print("-" * 20)
+
+    private_key = private_key['private_key']
+    print("This is a standard private key array. This is what SolFlare shows when you click `Export Private Key`")
+    print(private_key)
 
     # You can now initialize `SolanaWallet`, which can be used to create an NFT, transfer SOL, etc.
     # See the other examples.
-    _ = SolanaWallet(secret_recovery_phrase=secret_recovery_phrase)
+    _ = SolanaWallet(b58_private_key=b58_private_key)
+    _ = SolanaWallet(private_key=private_key)
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaNFTUploadMethod, SolanaNetwork
+from theblockchainapi import \
+    TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaNFTUploadMethod, SolanaNetwork, DerivationPath, SolanaWallet
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -20,23 +21,25 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     # Create a wallet
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    derivation_path = str()
-    pass_phrase = str()
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
-        secret_recovery_phrase=secret_key,
-        derivation_path=derivation_path,
-        passphrase=derivation_path
+    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
+    wallet = SolanaWallet(
+        secret_recovery_phrase=secret_recovery_phrase,
+        derivation_path=DerivationPath.CLI_PATH,
+        passphrase=str(),
+        private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
+        b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
     )
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
+
     print(f"Public Key: {public_key}")
-    print(f"Secret Key: {secret_key}")
+    print(f"Secret Recovery Phrase: {secret_recovery_phrase}")
 
     # Get an airdrop on the devnet in order to be able to mint an NFT
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
 
     # We need to make sure the airdrops have time to process before minting the NFT!
     import time
-    time.sleep(30)
+    time.sleep(15)
 
     def get_balance():
         balance_result = BLOCKCHAIN_API_RESOURCE.get_balance(
@@ -49,9 +52,8 @@ def example():
 
     # Mint an NFT
     nft = BLOCKCHAIN_API_RESOURCE.create_nft(
-        secret_recovery_phrase=secret_key,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase,
+        wallet=wallet,
+        # mint_to_public_key="GN4VCxyGgCY7gQmiZTn8FXvjEWdXQ7xLGqSjhi2zYWPQ",  # Will transfer NFT to this public key
         nft_name="The Blockchain API",
         nft_symbol="BLOCKX",
         nft_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg",

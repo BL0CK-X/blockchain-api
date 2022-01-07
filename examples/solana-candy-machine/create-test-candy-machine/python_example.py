@@ -1,5 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, \
-    SolanaCurrencyUnit, SolanaCandyMachineContractVersion
+    SolanaCurrencyUnit, SolanaCandyMachineContractVersion, SolanaWallet, DerivationPath
 
 # Get an API key pair for free here: https://dashboard.theblockchainapi.com/
 MY_API_KEY_ID = None
@@ -19,15 +19,16 @@ def example():
 
     # Create a new wallet
     network = SolanaNetwork.DEVNET
-    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    derivation_path = str()
-    pass_phrase = str()
-    print(secret_recovery_phrase)
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
-        secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase
+
+    wallet = SolanaWallet(
+        secret_recovery_phrase=BLOCKCHAIN_API_RESOURCE.generate_secret_key(),
+        derivation_path=DerivationPath.CLI_PATH,
+        passphrase=str(),
+        private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
+        b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
     )
+
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
     print(public_key)
 
     for _ in range(3):
@@ -37,11 +38,10 @@ def example():
     print(BLOCKCHAIN_API_RESOURCE.get_balance(public_key, SolanaCurrencyUnit.SOL, SolanaNetwork.DEVNET))
 
     # Creates a test candy machine with 5 available to mint
-    # NOTE: This endpoint is unstable for v1 candy machines. It is only meant for testing purposes.
+    # NOTE: This endpoint is not available for v1 mints.
+    # NOTE: It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
-        secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=derivation_path,
-        passphrase=pass_phrase,
+        wallet=wallet,
         # include_gatekeeper=False,  # You can set this to True to include a gatekeeper. Only applies to v2
         # candy machines. When gatekeeper is ON, our mint endpoint doesn't work.
         network=SolanaNetwork.DEVNET,
