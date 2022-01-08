@@ -98,6 +98,7 @@ const nftMintRequest = new theblockchainapi.NFTMintRequest(); // NFTMintRequest
 nftMintRequest.secret_recovery_phrase = new_seed_phrase;
 nftMintRequest.nft_name = 'Blockchain API NFT'
 nftMintRequest.nft_symbol = 'BLOCKX'
+// nftMintRequest.mint_to_public_key = "GN4VCxyGgCY7gQmiZTn8FXvjEWdXQ7xLGqSjhi2zYWPQ";  // Will transfer NFT to this public key
 
 opts = {
   'nFTMintRequest': nftMintRequest // NFTMintRequest | 
