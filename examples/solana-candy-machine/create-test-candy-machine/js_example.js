@@ -24,12 +24,14 @@ const new_seed_phrase = await apiInstance.solanaGenerateSecretRecoveryPhrase().t
     console.error(error);
     return null;
 });
-console.log("Seed Phrase: ", new_seed_phrase);
+console.log("New Seed Phrase: ", new_seed_phrase);
 
 // Then, derive a public key owned by the seed phrase.
 
 let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest | 
-getPublicKeyRequest.secret_recovery_phrase = new_seed_phrase;
+getPublicKeyRequest.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 
 const public_key = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
   console.log('API called successfully.');
@@ -93,7 +95,9 @@ await getBalance();
 await new Promise(r => setTimeout(r, 30000));
 
 const candy_request = new theblockchainapi.CreateTestCandyMachineRequest(); // CreateTestCandyMachineRequest |
-candy_request.secret_recovery_phrase = new_seed_phrase;
+candy_request.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 candy_request.candy_machine_contract_version = 'v2';
 
 let candyApiInstance = new theblockchainapi.SolanaCandyMachineApi();

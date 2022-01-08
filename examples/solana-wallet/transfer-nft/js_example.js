@@ -29,7 +29,9 @@ console.log("Seed Phrase: ", new_seed_phrase);
 // Then, derive a public key owned by the seed phrase.
 
 let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest | 
-getPublicKeyRequest.secret_recovery_phrase = new_seed_phrase;
+getPublicKeyRequest.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 
 const public_key = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
   console.log('API called successfully.');
@@ -97,7 +99,9 @@ let nftApiInstance = new theblockchainapi.SolanaNFTApi();
 const nftMintRequest = new theblockchainapi.NFTMintRequest(); // NFTMintRequest
 
 // https://github.com/BL0CK-X/theblockchainapi-wrappers/blob/b951a8300869f97d8e2336156d1af85ebb705c02/go/model_nft_mint_request.go#L19
-nftMintRequest.secret_recovery_phrase = new_seed_phrase;
+nftMintRequest.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 nftMintRequest.nft_name = 'Blockchain API NFT'
 nftMintRequest.nft_symbol = 'BLOCKX'
 

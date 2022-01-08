@@ -5,17 +5,19 @@ let defaultClient = theblockchainapi.ApiClient.instance;
 // Get a free API Key Pair here: https://dashboard.theblockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-SECRET-KEY';
+APIKeyID.apiKey = 'API-KEY-ID';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'API-KEY-ID';
+APISecretKey.apiKey = 'API-SECRET-KEY';
 
 let apiInstance = new theblockchainapi.SolanaWalletApi();
 
 let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest | 
-getPublicKeyRequest.secret_recovery_phrase = 'sadness swap zebra path panda power finger robot yellow game list enemy';
-getPublicKeyRequest.derivation_path = 'm/44/501/0/0';
-getPublicKeyRequest.passphrase = '';
+getPublicKeyRequest.wallet = {
+  secret_recovery_phrase: 'sadness swap zebra path panda power finger robot yellow game list enemy',
+  derivation_path: 'm/44/501/0/0',
+  passphrase: ''
+}
 
 const result = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
   console.log('API called successfully.');

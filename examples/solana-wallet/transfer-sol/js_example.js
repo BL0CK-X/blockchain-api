@@ -5,10 +5,10 @@ let defaultClient = theblockchainapi.ApiClient.instance;
 // Get a free API Key Pair here: https://dashboard.theblockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-KEY-ID';
+APIKeyID.apiKey = 'SmJ4gC0YHEmqLVy';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'API-SECRET-KEY';
+APISecretKey.apiKey = 'dIl34hRMTk23Zyi';
 
 let apiInstance = new theblockchainapi.SolanaWalletApi();
 
@@ -27,7 +27,9 @@ console.log("Seed Phrase: ", new_seed_phrase);
 // Then, derive a public key owned by the seed phrase.
 
 let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest | 
-getPublicKeyRequest.secret_recovery_phrase = new_seed_phrase;
+getPublicKeyRequest.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 
 const public_key = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
   console.log('API called successfully.');
@@ -90,7 +92,9 @@ await getBalance();
 
 const transfer_request = new theblockchainapi.TransferRequest(); // TransferRequest | 
 transfer_request.recipient_address = '31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj'; // Feel free to change to your public key address!
-transfer_request.secret_recovery_phrase = new_seed_phrase;
+transfer_request.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 // transfer_request.derivation_path = ''; // We're using the defaults.
 // transfer_request.passphrase = ''; // We're using the defaults.
 // transfer_request.token_address = ...; // Don't provide when transferring SOL.

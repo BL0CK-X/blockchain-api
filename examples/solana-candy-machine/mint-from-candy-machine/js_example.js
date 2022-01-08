@@ -26,12 +26,14 @@ const new_seed_phrase = await apiInstance.solanaGenerateSecretRecoveryPhrase().t
     console.error(error);
     return null;
 });
-console.log("Seed Phrase: ", new_seed_phrase);
+console.log("New Seed Phrase: ", new_seed_phrase);
 
 // Then, derive a public key owned by the seed phrase.
 
 let getPublicKeyRequest = new theblockchainapi.GetPublicKeyRequest(); // GetPublicKeyRequest | 
-getPublicKeyRequest.secret_recovery_phrase = new_seed_phrase;
+getPublicKeyRequest.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 
 const public_key = await apiInstance.solanaDerivePublicKey(getPublicKeyRequest).then((data) => {
   console.log('API called successfully.');
@@ -95,7 +97,9 @@ await getBalance();
 await new Promise(r => setTimeout(r, 30000));
 
 const candy_request = new theblockchainapi.CreateTestCandyMachineRequest(); // CreateTestCandyMachineRequest |
-candy_request.secret_recovery_phrase = new_seed_phrase;
+candy_request.wallet = {
+  secret_recovery_phrase: new_seed_phrase
+};
 candy_request.candy_machine_contract_version = 'v2';
 candy_request.network = network;
 
@@ -112,72 +116,78 @@ const candy_machine_id = await candyApiInstance.solanaCreateTestCandyMachine(opt
   return null;
 });
 
-console.log("Here is the candy machine ID.", candy_machine_id, "Now let's mint from it.")
+if (candy_machine_id !== null) {
+  console.log("Here is the candy machine ID.", candy_machine_id, "Now let's mint from it.")
 
-// We now need to get the configuration address to be able to send the mint API call
+  // We now need to get the configuration address to be able to send the mint API call
 
-const candy_details_request = new theblockchainapi.GetCandyMetadataRequest(); // GetCandyMetadataRequest |
-candy_details_request.candy_machine_id = candy_machine_id;
-candy_details_request.network = network;
-candy_details_request.candy_machine_contract_version = 'v2';
+  const candy_details_request = new theblockchainapi.GetCandyMetadataRequest(); // GetCandyMetadataRequest |
+  candy_details_request.candy_machine_id = candy_machine_id;
+  candy_details_request.network = network;
+  candy_details_request.candy_machine_contract_version = 'v2';
 
-opts = {
-  'getCandyMetadataRequest': candy_details_request
-};
+  opts = {
+    'getCandyMetadataRequest': candy_details_request
+  };
 
-const candy_machine_details = await candyApiInstance.solanaGetCandyMachineMetadata(opts).then((data) => {
-  console.log('API called successfully.');
-  return data;
-}, (error) => {
-  console.error(error);
-  return error;
-});
+  const candy_machine_details = await candyApiInstance.solanaGetCandyMachineMetadata(opts).then((data) => {
+    console.log('API called successfully.');
+    return data;
+  }, (error) => {
+    console.error(error);
+    return error;
+  });
 
-const candy_machine_config_address = candy_machine_details['config_address'];
+  const candy_machine_config_address = candy_machine_details['config_address'];
 
-console.log("Retrieved the Config Address:", candy_machine_config_address);
+  console.log("Retrieved the Config Address:", candy_machine_config_address);
 
-let candyMachineApi = new theblockchainapi.SolanaCandyMachineApi();
-const request = new theblockchainapi.MintNFTRequest(); // MintNFTRequest |
+  let candyMachineApi = new theblockchainapi.SolanaCandyMachineApi();
+  const request = new theblockchainapi.MintNFTRequest(); // MintNFTRequest |
 
-request.secret_recovery_phrase = new_seed_phrase;
-request.config_address = candy_machine_config_address;
-request.candy_machine_contract_version = 'v2';
-request.network = network;
+  request.wallet = {
+    secret_recovery_phrase: new_seed_phrase
+  };
+  request.config_address = candy_machine_config_address;
+  request.candy_machine_contract_version = 'v2';
+  request.network = network;
 
-opts = {
-  'mintNFTRequest': request
-};
+  opts = {
+    'mintNFTRequest': request
+  };
 
-const transactionSignature = await candyMachineApi.solanaMintFromCandyMachine(opts).then((data) => {
-  console.log('API called successfully.');
-  return data['transaction_signature'];
-}, (error) => {
-  console.error(error);
-  return null;
-});
+  const transactionSignature = await candyMachineApi.solanaMintFromCandyMachine(opts).then((data) => {
+    console.log('API called successfully.');
+    return data['transaction_signature'];
+  }, (error) => {
+    console.error(error);
+    return null;
+  });
 
-console.log("Transaction Signature: ", transactionSignature)
+  console.log("Transaction Signature: ", transactionSignature)
 
-console.log("Sleeping for 30 secs...")
-// Wait for the transaction to be confirmed... about 30 secs
-await new Promise(r => setTimeout(r, 30000));
+  console.log("Sleeping for 30 secs...")
+  // Wait for the transaction to be confirmed... about 30 secs
+  await new Promise(r => setTimeout(r, 30000));
 
-// Check TX success
+  // Check TX success
 
-let txApiInstance = new theblockchainapi.SolanaTransactionApi();
-const txResult = await txApiInstance.solanaGetTransaction(network, transactionSignature).then((data) => {
-  console.log('API called successfully.');
-  return data;
-}, (error) => {
-  console.error(error);
-  return null;
-});
+  let txApiInstance = new theblockchainapi.SolanaTransactionApi();
+  const txResult = await txApiInstance.solanaGetTransaction(network, transactionSignature).then((data) => {
+    console.log('API called successfully.');
+    return data;
+  }, (error) => {
+    console.error(error);
+    return null;
+  });
 
-console.log(txResult);
-const didSucceed = txResult['result']['meta']['err'] === null;
-console.log(txResult['result']['meta']['err']);
-console.log("Did the tx succeed? ", didSucceed);
+  console.log(txResult);
+  const didSucceed = txResult['result']['meta']['err'] === null;
+  console.log(txResult['result']['meta']['err']);
+  console.log("Did the tx succeed? ", didSucceed);
 
-const url_to_view = "https://explorer.solana.com/tx/" + transactionSignature + "?cluster=" + network;
-console.log("You can view the transaction here: ", url_to_view)
+  const url_to_view = "https://explorer.solana.com/tx/" + transactionSignature + "?cluster=" + network;
+  console.log("You can view the transaction here: ", url_to_view)
+} else {
+  console.log("ERROR. Please try again.")
+}
