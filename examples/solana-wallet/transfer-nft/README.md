@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaTransfer">"Transfer from Wallet" endpoint</a>.
+### Example for the <a href="https://docs.blockchainapi.com/#operation/solanaTransfer">"Transfer from Wallet" endpoint</a>.
 
 This shows how to transfer an NFT, but you can also use this example to transfer any SPL token by replacing the `token_address`.
 

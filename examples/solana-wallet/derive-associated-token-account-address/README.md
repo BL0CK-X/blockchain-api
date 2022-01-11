@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaDeriveAssociatedTokenAccountAddress">"Derive Associated Token Account" endpoint</a>.
+### Example for the <a href="https://docs.blockchainapi.com/#operation/solanaDeriveAssociatedTokenAccountAddress">"Derive Associated Token Account" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 

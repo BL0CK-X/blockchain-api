@@ -1,4 +1,4 @@
-### Example for the <a target="_blank" href="https://docs.theblockchainapi.com/#operation/solanaGetTransaction">"Get Solana Transaction" endpoint</a>.
+### Example for the <a target="_blank" href="https://docs.blockchainapi.com/#operation/solanaGetTransaction">"Get Solana Transaction" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 

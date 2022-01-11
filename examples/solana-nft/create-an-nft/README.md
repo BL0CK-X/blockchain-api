@@ -1,4 +1,4 @@
-### Example for the <a href="https://docs.theblockchainapi.com/#operation/solanaCreateNFT">"Create an NFT" endpoint</a>.
+### Example for the <a href="https://docs.blockchainapi.com/#operation/solanaCreateNFT">"Create an NFT" endpoint</a>.
 
 `python_example.py`: An example using the Python PyPi package `theblockchainapi`. To get started, run `pip install theblockchainapi`.<br/><br/>
 
