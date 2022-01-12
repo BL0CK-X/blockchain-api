@@ -1,6 +1,6 @@
 # The Blockchain API
 
-Get an API key pair <a href="https://dashboard.theblockchainapi.com/api-keys">here</a>.
+Get an API key pair <a href="https://dashboard.blockchainapi.com/api-keys">here</a>.
 
 Make coding with blockchains easy.
 
@@ -25,10 +25,10 @@ We have not tested them. If you run into any issues, publish one <a href="https:
 ## Resources
 
 - Post feature requests to the issues tab this repo!
-- Check out the docs: https://docs.theblockchainapi.com
-- Dashboard: https://dashboard.theblockchainapi.com
-- Landing Page: https://theblockchainapi.com
+- Check out the docs: https://docs.blockchainapi.com
+- Dashboard: https://dashboard.blockchainapi.com
+- Landing Page: https://blockchainapi.com
 - Discord: https://discord.gg/d49yzrZRAF
 - YouTube Tutorials: https://www.youtube.com/channel/UCtZh22T-0gjNlPi2FWeoRWg
-- Contact Page: https://dashboard.theblockchainapi.com/contact
-- Pricing/Billing Page: https://dashboard.theblockchainapi.com/billing
+- Contact Page: https://dashboard.blockchainapi.com#contact
+- Pricing/Billing Page: https://dashboard.blockchainapi.com#billing
