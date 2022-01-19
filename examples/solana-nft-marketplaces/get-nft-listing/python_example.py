@@ -1,5 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, \
-    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet
+    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet, SolanaExchange
 import json
 
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
@@ -20,6 +20,9 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     network = SolanaNetwork.DEVNET
+
+    # exchange = SolanaExchange.SOLSEA
+    exchange = SolanaExchange.MAGIC_EDEN
 
     # Create a new wallet
     wallet = SolanaWallet(
@@ -61,11 +64,12 @@ def example():
 
     nft_price = 69  # lamports
 
-    listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft_on_solsea(
+    listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft(
         mint_address=mint_address,
         wallet=wallet,
         network=network,
-        nft_price=nft_price
+        nft_price=nft_price,
+        exchange=exchange
     )
     print(f"Listed NFT with tx signature: `{listing_tx}`.")
 

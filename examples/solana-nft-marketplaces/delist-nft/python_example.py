@@ -1,5 +1,5 @@
 from theblockchainapi import TheBlockchainAPIResource, \
-    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet
+    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet, SolanaExchange
 
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
@@ -19,6 +19,9 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     network = SolanaNetwork.DEVNET
+
+    # exchange = SolanaExchange.SOLSEA
+    exchange = SolanaExchange.MAGIC_EDEN
 
     # Create a new wallet
     wallet = SolanaWallet(
@@ -55,10 +58,11 @@ def example():
 
     nft_price = 69  # lamports
 
-    listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft_on_solsea(
+    listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft(
         mint_address=mint_address,
         wallet=wallet,
         network=network,
+        exchange=exchange,
         nft_price=nft_price
     )
     print(f"Listed NFT with tx signature: `{listing_tx}`.")
@@ -66,9 +70,10 @@ def example():
     nft_owner = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, network)
     print(f"We no longer hold the NFT because it is held in escrow by: {nft_owner}")
 
-    delisting_tx = BLOCKCHAIN_API_RESOURCE.delist_nft_from_solsea(
+    delisting_tx = BLOCKCHAIN_API_RESOURCE.delist_nft(
         mint_address=mint_address,
         wallet=wallet,
+        exchange=exchange,
         network=network
     )
 
