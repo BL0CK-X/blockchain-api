@@ -110,17 +110,19 @@ getNftOwner(network, mintAddress);
 // (3) LIST THE NFT
 
 let marketplaceApi = new theblockchainapi.SolanaNFTMarketplacesApi();
+let exchange = 'solsea';
+// let exchange = 'magic-eden'; // Uncomment this line to use Magic Eden
 
-let listRequest =  new theblockchainapi.SolSeaListRequest() // SolSeaListRequest |
+let listRequest =  new theblockchainapi.ListRequest() // ListRequest |
 listRequest.wallet = {
   'b58_private_key': b58_private_key
 };
 listRequest.nft_price = 20;  // 20 lamports, NOT SOL
 let listOpts = {
-  'solSeaListRequest': listRequest
+  'listRequest': listRequest
 };
 
-let result = await marketplaceApi.solanaListNFTOnSolSea(network, mintAddress, listOpts).then((data) => {
+let result = await marketplaceApi.solanaListNFT(network, exchange, mintAddress, listOpts).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
@@ -135,16 +137,16 @@ getNftOwner(network, mintAddress);
 
 // (4) DELIST THE NFT
 
-let delistRequest =  new theblockchainapi.SolSeaDelistRequest() // SolSeaDelistRequest |
+let delistRequest =  new theblockchainapi.DelistRequest() // DelistRequest |
 delistRequest.wallet = {
   'b58_private_key': b58_private_key
 };
 let delistOpts = {
-  'solSeaDelistRequest': delistRequest
+  'delistRequest': delistRequest
 };
 
 
-result = await marketplaceApi.solanaDelistNFTFromSolSea(network, mintAddress, delistOpts).then((data) => {
+result = await marketplaceApi.solanaDelistNFT(network, exchange, mintAddress, delistOpts).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {

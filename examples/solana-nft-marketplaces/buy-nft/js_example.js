@@ -5,10 +5,10 @@ let defaultClient = theblockchainapi.ApiClient.instance;
 // Get a free API Key Pair here: https://dashboard.blockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-KEY-ID';
+APIKeyID.apiKey = 'ofEWlmlFyvCg15d'; //'API-KEY-ID';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'API-SECRET-KEY';
+APISecretKey.apiKey = '1kACF5GicguGGfK'; //'API-SECRET-KEY';
 
 // (1) CREATE A NEW WALLET AND GET A SOL AIRDROP
 
@@ -110,17 +110,19 @@ getNftOwner(network, mintAddress);
 // (3) LIST THE NFT
 
 let marketplaceApi = new theblockchainapi.SolanaNFTMarketplacesApi();
+let exchange = 'solsea';
+// let exchange = 'magic-eden'; // Uncomment this line to use Magic Eden
 
-let listRequest =  new theblockchainapi.SolSeaListRequest() // SolSeaListRequest |
+let listRequest =  new theblockchainapi.ListRequest() // ListRequest |
 listRequest.wallet = {
   'b58_private_key': b58_private_key
 };
 listRequest.nft_price = 20;  // 20 lamports, NOT SOL
 let listOpts = {
-  'solSeaListRequest': listRequest
+  'listRequest': listRequest
 };
 
-let result = await marketplaceApi.solanaListNFTOnSolSea(network, mintAddress, listOpts).then((data) => {
+let result = await marketplaceApi.solanaListNFT(network, exchange, mintAddress, listOpts).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
@@ -135,17 +137,17 @@ getNftOwner(network, mintAddress);
 
 // (4) BUY AN NFT
 
-let buyRequest =  new theblockchainapi.SolSeaBuyRequest() // SolSeaBuyRequest |
+let buyRequest =  new theblockchainapi.BuyRequest() // BuyRequest |
 buyRequest.nft_price = 20;  // 20 lamports, NOT SOL
 buyRequest.wallet = {
   'b58_private_key': b58_private_key
 };
 let buyOpts = {
-  'solSeaBuyRequest': buyRequest
+  'buyRequest': buyRequest
 };
 
 
-result = await marketplaceApi.solanaBuyNFTFromSolSea(network, mintAddress, buyOpts).then((data) => {
+result = await marketplaceApi.solanaBuyNFT(network, exchange, mintAddress, buyOpts).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
