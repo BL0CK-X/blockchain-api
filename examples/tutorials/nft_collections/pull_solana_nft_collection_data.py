@@ -124,25 +124,6 @@ def pull_mint_stats():
         for exchange_listing_name, mints in exchange_listings.items():
             print(f"{len(mints)} Money Boys are listed on {exchange_listing_name}")
 
-            # certaintly_listed = {
-            #     'FvBUCjPam99m13LgMez5TS8T1rmr3iidHgQQJYJcLQbW',
-            #     'eGxPk1GMw399MTqqtkQCCY8MvEEhm9oZZvK8Fr8Qton',
-            #     '7A9twRaBdeLL2FrPZgi3T7fEQob5q2Ypf3ZVEvgXLaoE',
-            #     'HWL65ZQcbJU8uWVcW86hPPFb72qErHJdoDv6AKuTGnQq',
-            #     '6YZkUNm71fyFtxwjQiRt6qX1NWWCn9EMPEzV121mbHwr',
-            #     '7jJUaPZojMV8g2FNejud69FEjSUQwHCV88GAn1QeSRcE',
-            #     '5Dx7r2As19EpDKWBpn38Xg8G3Y6CewiFsEu28NXTHGnE',
-            #     '5iLHqR8zymvknLK2WxVqW8gGrDmamGMpX9tuVgombjR9',
-            #     'Das4hWFZRTzWSZjqHH9eysJcVLpG7Cx8SAjeDNXNZ9u5',
-            #     '55FSKjyzneApkD31SbYBF28tiBAiK9n2Sjs3U3saYgQo',
-            #     '8jNsSbBzrjqbJLza2mCkgkF97UYQwwRdzBHC25PFqA7Q',
-            #     'JBXR7SrFbyipFwSvNog9nYAEoNyQLwARXZLwtyXsaVrG',
-            #     '5NMrvtwjXVG6UhmDo1e5LmhqxWqWbedwk21EGhyzMNGd'
-            # }
-            #
-            # print(certaintly_listed.difference(mints))
-            # print(mints.difference(certaintly_listed))
-
         print(f"Highest Price: {round(max(prices) / lamports_in_a_sol, 4)} SOL")
         print(f"Floor Price: {round(min(prices) / lamports_in_a_sol, 4)} SOL")
     else:
