@@ -2,7 +2,7 @@ import theblockchainapi from 'theblockchainapi';
 
 let defaultClient = theblockchainapi.ApiClient.instance;
 
-// Get a free API Key Pair here: https://dashboard.theblockchainapi.com/api-keys
+// Get a free API Key Pair here: https://dashboard.blockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
 APIKeyID.apiKey = 'API-KEY-ID';

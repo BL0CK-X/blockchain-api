@@ -2,7 +2,7 @@ from theblockchainapi import TheBlockchainAPIResource, \
     SolanaNetwork, SolanaCurrencyUnit, SolanaCandyMachineContractVersion, SolanaWallet, DerivationPath
 import time
 
-# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
@@ -75,6 +75,8 @@ def example():
     print("transaction_signature", transaction_signature)
 
     # The transaction takes about 30-60 seconds to confirm...
+    # Check out this Gist for how to formally check confirmation status:
+    # https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d
     print("Sleeping for 30 seconds while the transaction is confirmed.")
     time.sleep(30)
 

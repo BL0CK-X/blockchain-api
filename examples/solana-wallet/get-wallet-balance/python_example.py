@@ -1,8 +1,9 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaMintAddresses, SolanaNetwork
+from theblockchainapi import TheBlockchainAPIResource, SolanaMintAddresses, SolanaNetwork, SolanaWallet
 
-# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -18,9 +19,10 @@ def example():
 
     # (1) Test get SOL balance
     # Create a new wallet, get an airdrop, and then get its balance
-    secret_key = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    print(secret_key)
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(secret_key)
+    secret_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
+    print(secret_phrase)
+    wallet = SolanaWallet(secret_recovery_phrase=secret_phrase)
+    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
     print(public_key)
     airdrop_tx_signature = BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
     print(airdrop_tx_signature)

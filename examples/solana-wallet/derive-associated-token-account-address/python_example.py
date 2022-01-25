@@ -1,6 +1,6 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
+from theblockchainapi import TheBlockchainAPIResource, SolanaWallet
 
-# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
@@ -19,12 +19,14 @@ def example():
 
     my_secret_phrase = 'sadness swap zebra path panda power finger robot yellow game list enemy'
 
-    # You can replace this with your public key here. Then you won't have to provide a seed phrase.
-    my_public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(
+    wallet = SolanaWallet(
         derivation_path="m/44/501/0/0",
         secret_recovery_phrase=my_secret_phrase,
         passphrase=str()
     )
+
+    # You can replace this with your public key here. Then you won't have to provide a seed phrase.
+    my_public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
 
     # An NFT on mainnet-beta
     # https://explorer.solana.com/address/7EWJNaNYfPYMaqzdAAa4ps5kpqW95B7VHsjhW1kr18sj

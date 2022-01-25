@@ -1,9 +1,10 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCandyMachineContractVersion
 import json
 
-# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -20,13 +21,14 @@ def example():
     candy_machine_id_v1 = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
     metadata = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
         candy_machine_id=candy_machine_id_v1,
-        network=SolanaNetwork.MAINNET_BETA
+        network=SolanaNetwork.MAINNET_BETA,
+        candy_machine_contract_version=SolanaCandyMachineContractVersion.V1
     )
     print(f"Metadata of a v1 Candy Machine")
     print(json.dumps(metadata, indent=4, sort_keys=True))
     print("-" * 20)
 
-    candy_machine_id_v2 = "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1"
+    candy_machine_id_v2 = "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3"
     metadata = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
         candy_machine_id=candy_machine_id_v2,
         network=SolanaNetwork.MAINNET_BETA,
@@ -49,31 +51,11 @@ if __name__ == '__main__':
         "bump": 255.0,
         "candy_machine_id": "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5",
         "config_address": "FVbP4uormTqtmR8uQS2YrfKEfoVoQfGEzznCMPTQMZoQ",
-        "creators": [
-            {
-                "address": "9C5Tg7bKV2m2H79sJ8WzrRYUyC7qQe5foxZvGCR8BZ5A",
-                "share": 30.0
-            },
-            {
-                "address": "EEs4thyqw4dCgFXZDzSaX5eXM9XtF4XscSEQWjb7jZqV",
-                "share": 30.0
-            },
-            {
-                "address": "B13yYLdTb3reTZmoyZtGGxCCqEpTzLR2PTzgTomTYuK4",
-                "share": 40.0
-            }
-        ],
         "go_live_date": 1635883384.0,
-        "is_mutable": true,
         "items_available": 8888.0,
         "items_redeemed": 8888.0,
-        "max_number_of_lines": 8888.0,
-        "max_supply": 0.0,
-        "partial_info": false,
+        "partial_info": true,
         "price": 1000.0,
-        "retain_authority": true,
-        "seller_fee_basis_points": 1000.0,
-        "symbol": "GOAT",
         "token_mint": null,
         "uuid": "FVbP4u",
         "wallet": "B13yYLdTb3reTZmoyZtGGxCCqEpTzLR2PTzgTomTYuK4"
@@ -81,44 +63,46 @@ if __name__ == '__main__':
     --------------------
     Metadata of a v2 Candy Machine
     {
-        "authority": "D9Ysnx4sNgkKsUSkRr5Dt8iTDMWraRDhjVkPX2hgx7Rj",
-        "candy_machine_id": "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1",
-        "config_address": "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1",
+        "authority": "EDshWM3jBy2YUszMiFLAFLx3WkbtqR9An7JZzvg22R1P",
+        "candy_machine_id": "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3",
+        "config_address": "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3",
         "creators": [
-            "4griW5rKwn7ecT99ECbNJ9nqFWVxSWGity5PxVuDHMeh",
-            100.0
+            "5LAfBvHiJBKaEqqXd7TmPZgbmRPRbqRBMbQLPeyqE46p",
+            85.0,
+            "HCRc9R6iEmmSz7m9LvHtPt3o1WvyoSj6yWtvXRESEFSF",
+            5.0,
+            "G2Z8DTdcnhLg9ydosi9o9g5PfQQre1LpdGDLoTN6tYBe",
+            10.0
         ],
         "end_settings": {
             "end_on_x_date": null,
             "end_when_x_sold": null
         },
         "gatekeeper": {
-            "expire_on_use": null,
-            "gatekeeper_network": null
+            "expire_on_use": true,
+            "gatekeeper_network": "ignREusXmGrscGNUesoU9mxfds9AiYTezUKex2PsZV6"
         },
-        "go_live_date": 1640118060.0,
+        "go_live_date": 1639249200.0,
         "hidden_settings": null,
         "is_mutable": true,
-        "items_available": 4444.0,
-        "items_redeemed": 840.0,
-        "key": "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1",
+        "items_available": 777.0,
+        "items_redeemed": 702.0,
+        "key": "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3",
         "max_supply": 0.0,
         "partial_info": false,
-        "price": 550000000.0,
+        "price": 1.0,
         "retain_authority": true,
-        "seller_fee_basis_points": 600.0,
+        "seller_fee_basis_points": 500.0,
         "share": [],
-        "symbol": "TROLEX",
-        "token_mint": null,
-        "uuid": "4m1Nuy",
-        "wallet": "4griW5rKwn7ecT99ECbNJ9nqFWVxSWGity5PxVuDHMeh",
+        "symbol": "LJGEN2",
+        "token_mint": "4bvi1vSLJn4z5iDDYfUcroJJYAMfViNW8TRQDhxNKY95",
+        "uuid": "BdgRfR",
+        "wallet": "5zuTfpJcR87nRvykbDzVwXkzwnq38QewqbT3hHGFGMiv",
         "whitelist": {
-            "discounted_price": 450000000.0,
-            "mint": "nNK9tzMQNmuftMHKaHHc635ubsvpWvsbd2Ut5nZ5GUT",
-            "mode": {
-                "burnEveryTime": {}
-            },
-            "presale": true
+            "discounted_price": null,
+            "mint": null,
+            "mode": null,
+            "presale": null
         }
     }
     --------------------

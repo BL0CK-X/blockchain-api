@@ -1,8 +1,9 @@
 from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork
 
-# Get an API key pair for free here: https://dashboard.theblockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -22,7 +23,10 @@ def example():
         network=SolanaNetwork.MAINNET_BETA
     )
     for nft in nfts:
-        print(f"Mint Address: {nft}")
+        print("-" * 20)
+        print(f"NFT: {nft}")
+
+    print(f"This person owns {len(nfts)} NFTs.")
 
 
 if __name__ == '__main__':
