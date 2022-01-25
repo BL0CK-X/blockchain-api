@@ -16,26 +16,19 @@ def pull_mint_addresses():
     update_authorities = defaultdict(int)
 
     nfts = BLOCKCHAIN_API_RESOURCE.search_nfts(
-        update_authority='3wezwrg4WtZumXhMNbdR6aJLSfBxdggnLzRQJUEzAZUJ',
-        nft_name="0euvre-Custom-Wave1 #",
+        # update_authority="CvywfuSVev6da9LngjJkFd2y3utrU2W9zvHw8TAmfo9P",
+        symbol="YC\x00",
+        symbol_search_method=SearchMethod.EXACT_MATCH,
+        nft_name="Solana Money Boy",
         nft_name_search_method=SearchMethod.BEGINS_WITH,
         network=SolanaNetwork.MAINNET_BETA
     )
-
-    # nfts = BLOCKCHAIN_API_RESOURCE.search_nfts(
-    #     # update_authority="CvywfuSVev6da9LngjJkFd2y3utrU2W9zvHw8TAmfo9P",
-    #     # symbol="YC\x00",
-    #     # symbol_search_method=SearchMethod.EXACT_MATCH,
-    #     nft_name="Solana Money Boy",
-    #     nft_name_search_method=SearchMethod.BEGINS_WITH,
-    #     network=SolanaNetwork.MAINNET_BETA
-    # )
     print(len(nfts))
 
     for nft in nfts:
         update_authorities[nft['nft_metadata']['update_authority']] += 1
 
-    # We know there are only max 4 update authorities.
+    # We know there are only max 4 update authorities, because we know there are 4 candy machines.
 
     valid_update_authorities = set()
     min_associated_nfts_to_be_valid = 50
@@ -118,6 +111,14 @@ def pull_mint_stats():
     for owner in top_ten_owners:
         print(f"{owner} owns {owners[owner]} Money Boys.")
 
+    print("-" * 20)
+    owners_with_more_than_x_money_boys = 5
+    print(f"Printing Owners with More than {owners_with_more_than_x_money_boys} Money Boys")
+    for owner, count in owners.items():
+        if count > owners_with_more_than_x_money_boys:
+            print(owner, count)
+    print("-" * 20)
+
     lamports_in_a_sol = int(1e9)
 
     if len(exchange_listings) > 0:
@@ -129,15 +130,7 @@ def pull_mint_stats():
     else:
         print("No listings found for the entire collection!")
 
-    # print(owners)
-    # print(mint_addresses)
-
 
 if __name__ == '__main__':
     # pull_mint_addresses()
-    # result = BLOCKCHAIN_API_RESOURCE.get_nft_listing(
-    #     mint_address='5Dx7r2As19EpDKWBpn38Xg8G3Y6CewiFsEu28NXTHGnE',
-    #     network=SolanaNetwork.MAINNET_BETA
-    # )
-    # print(result)
     pull_mint_stats()
