@@ -97,7 +97,8 @@
             fetch("https://api.blockchainapi.com/v1/solana/wallet/transfer", {
 
                 method: "POST",
-
+                
+                // Do NOT put your keys in a *public* HTML file. This is ONLY for testing purposes.
                 headers: {
                     'Content-Type': 'application/json',
                     'APIKeyId': 'API-KEY-ID',
