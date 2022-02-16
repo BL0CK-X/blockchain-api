@@ -5,10 +5,10 @@ let defaultClient = theblockchainapi.ApiClient.instance;
 // Get a free API Key Pair here: https://dashboard.blockchainapi.com/api-keys
 
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-KEY-ID';
+APIKeyID.apiKey = 'INSERT-API-KEY-ID';
 
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'API-SECRET-KEY';
+APISecretKey.apiKey = 'INSERT-API-SECRET-KEY';
 
 ///// Here, we create a new wallet, get an airdrop, use the airdrop to mint an NFT and then transfer it.
 
@@ -127,9 +127,14 @@ const mint_address = nft_result['mint'];
 
 const transfer_request = new theblockchainapi.TransferRequest(); // TransferRequest | 
 transfer_request.recipient_address = 'AVNmoT2BcZTVxa4Vq4sRYWwA6z8azGF6yg8Fb1hc2VS2'; // Feel free to change to your public key address!
-transfer_request.secret_recovery_phrase = new_seed_phrase;
-// transfer_request.derivation_path = ''; // We're using the defaults.
-// transfer_request.passphrase = ''; // We're using the defaults.
+transfer_request.wallet = {
+    'secret_recovery_phrase': new_seed_phrase,
+//    'derivation_path': '', // We're using the defaults.
+//    'passphrase': '' // We're using the defaults.
+};
+//transfer_request['fee_payer_wallet'] = {
+//    'b58_private_key': 'INSERT-PRIVATE-KEY' // or other wallet method authentication
+//};
 transfer_request.token_address = mint_address;
 transfer_request.network = 'devnet';
 // transfer_request.amount = '1'; // The amount must be '1' because it's an NFT. '1' is the default.
