@@ -1,5 +1,6 @@
 from theblockchainapi import TheBlockchainAPIResource
 import json
+import requests
 
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
@@ -18,23 +19,23 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    mint_addresses = [
-        '22oPvMQkpdMpJ6KJ3WPYH8CLBS3Qd62WTjw9ugqrfaAt',
-        '7tGEAXH2xWnqTDfKpQwMijFfpunAitkonLsFNPN51TsE',
-        'DjBRcfH83wPpZ5TQ9mJ1i7PzP4LbZ2gp7MhbDfdhJRng',
-        'CD8awfGuU4fkFAwKTbb94zcMi41V7bmxdFiFRu1xTEZn'
-    ]
-    start_time = None
+    collection_data_url = \
+        'https://raw.githubusercontent.com/BL0CK-X/solana-nft-collection-mint-addresses/main/collections.json'
+    mint_addresses = requests.get(collection_data_url).json()['solana_money_boys']
+    start_time = None  # Default start time is 1 day ago. Provide -1 to get full history (since we began recording it).
     end_time = None
-    analytics = BLOCKCHAIN_API_RESOURCE.get_marketplace_analytics(
+
+    print(f"Retrieved {len(mint_addresses)} mint addresses.")
+
+    analytics = BLOCKCHAIN_API_RESOURCE.get_nft_marketplace_analytics(
         mint_addresses=mint_addresses,
         start_time=start_time,
         end_time=end_time
     )
 
+    print(f"NFT Transactions: {json.dumps(analytics, indent=4)}")
     print(f"Floor = {analytics['floor']}")
     print(f"Volume = {analytics['volume']}")
-    print(f"NFT Transactions: {json.dumps(analytics, indent=4)}")
 
 
 if __name__ == '__main__':

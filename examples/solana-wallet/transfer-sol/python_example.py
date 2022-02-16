@@ -63,16 +63,26 @@ def example():
     amount_to_send = str(airdrop_amount - transfer_fee)
 
     # Transfer to this address
-    transfer_to = "31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj"
+    transfer_to = "8UmhEzc1CGkYazNQcGHvAAgTw9vy8mfBb5z4huyeftxc"
 
     # Call the transfer endpoint
     transaction_signature = BLOCKCHAIN_API_RESOURCE.transfer(
         wallet=wallet,
         recipient_address=transfer_to,
         amount=amount_to_send,
-        network=SolanaNetwork.DEVNET
+        network=SolanaNetwork.DEVNET,
+
+        # Set the fee payer if you want someone else to pay the fee.
+        # fee_payer_wallet=SolanaWallet(b58_private_key='INSERT FEE PAYER PRIVATE KEY'),
+
+        # If you don't want to send private keys, define the `sender_public_key` and set `return_compiled_transaction`
+        # to `True`. This will return instructions that you can sign and then send as a transaction.
+        # sender_public_key='insert public key',
+        # return_compiled_transaction=True  # default is False
     )
-    print(transaction_signature)
+
+    print("Transferred!")
+    print(f"You can view the transaction here: https://explorer.solana.com/tx/{transaction_signature}?cluster=devnet")
 
     # The output of this `get_balance()` call should be `airdrop_amount` less
     # than the previous output of `get_balance()`

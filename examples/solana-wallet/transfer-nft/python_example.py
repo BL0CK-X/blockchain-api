@@ -56,13 +56,19 @@ def example():
     # You can put your address in the `transfer_to` and receive the NFT on the devnet.
     # You can view it in your Phantom wallet by going to Settings > Change Network > Devnet and then viewing
     # your collectibles.
-    transfer_to = "31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj"
+    transfer_to = "8UmhEzc1CGkYazNQcGHvAAgTw9vy8mfBb5z4huyeftxc"
     transaction_signature = BLOCKCHAIN_API_RESOURCE.transfer(
         wallet=wallet,
         recipient_address=transfer_to,
-        token_address=nft['mint']
+        token_address=nft['mint'],
+        fee_payer_wallet=SolanaWallet(
+            b58_private_key='INSERT FEE PAYER PRIVATE KEY',
+            # private_key='',  # Or one of these other options
+            # secret_recovery_phrase=''  # Or one of these other options
+        )
     )
-    print(transaction_signature)
+    print("Transferred!")
+    print(f"You can view the transaction here: https://explorer.solana.com/tx/{transaction_signature}?cluster=devnet")
 
     get_balance()
 
