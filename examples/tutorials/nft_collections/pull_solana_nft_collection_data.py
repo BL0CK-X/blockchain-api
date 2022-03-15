@@ -80,8 +80,8 @@ def pull_mint_stats():
                         owner_ = listing['seller']
                     prices.append(listing['price'])
                     exchange_listings[listing['exchange_readable']].add(mint_address)
-                except Exception as _:
-                    pass
+                except Exception as e:
+                    print(e, mint_address)
 
                 owners[owner_] += 1
             except Exception as e:
@@ -133,4 +133,10 @@ def pull_mint_stats():
 
 if __name__ == '__main__':
     # pull_mint_addresses()
+    import time
+    start = int(time.time())
+    print("START:", start)
     pull_mint_stats()
+    end = int(time.time())
+    print("END:", end)
+    print(f"TOOK {end - start} SECONDS")

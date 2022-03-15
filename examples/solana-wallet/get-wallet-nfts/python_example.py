@@ -17,7 +17,7 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    public_key = 'BNedxPqVzNAYDfJsdCeMqegTGTTG4qbjci9WkwsXBGsx'
+    public_key = 'DJHXvX9uatdjnitZgWCaSi5TYGiMhNP8tLWkdZLKwvDX'
     nfts = BLOCKCHAIN_API_RESOURCE.get_nfts_belonging_to_address(
         public_key,
         network=SolanaNetwork.MAINNET_BETA
