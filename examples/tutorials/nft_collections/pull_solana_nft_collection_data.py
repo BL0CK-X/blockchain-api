@@ -58,7 +58,7 @@ def pull_mint_stats():
         # with open("0euvre_mint_addresses.json", "rb+") as fp:
         mint_addresses = json.loads(fp.read())
 
-    executor = ThreadPoolExecutor(max_workers=200)
+    executor = ThreadPoolExecutor(max_workers=20)
     tasks = list()
     n_mints = len(mint_addresses)
     prices = list()
