@@ -56,7 +56,7 @@ def example():
     nft_owner = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, network)
     print(f"NFT Owner: {nft_owner}")
 
-    nft_price = 69  # lamports
+    nft_price = 6900  # lamports
 
     listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft(
         mint_address=mint_address,
