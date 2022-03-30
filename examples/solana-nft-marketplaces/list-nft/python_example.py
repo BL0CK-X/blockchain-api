@@ -5,6 +5,7 @@ from theblockchainapi import TheBlockchainAPIResource, \
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
+
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
@@ -56,7 +57,7 @@ def example():
     nft_owner = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, network)
     print(f"NFT Owner: {nft_owner}")
 
-    nft_price = 69  # lamports
+    nft_price = 6900  # lamports
 
     listing_tx = BLOCKCHAIN_API_RESOURCE.list_nft(
         mint_address=mint_address,
