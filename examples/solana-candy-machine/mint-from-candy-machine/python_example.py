@@ -3,8 +3,9 @@ from theblockchainapi import TheBlockchainAPIResource, \
 import time
 
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = 'BuzqtLlJD0uQc12'
+MY_API_SECRET_KEY = '1cdUT88NgsH9UVt'
+
 
 BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
@@ -63,33 +64,34 @@ def example():
     config_address = candy_details['config_address']
     print("Config Address: ", config_address)
 
-    # Now mint an NFT from the candy machine
-    transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
-        config_address=config_address,
-        wallet=wallet,
-        network=SolanaNetwork.DEVNET,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
-    )
+    for _ in range(10):
+        # Now mint an NFT from the candy machine
+        transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
+            config_address=config_address,
+            wallet=wallet,
+            network=SolanaNetwork.DEVNET,
+            candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        )
 
-    # We get a task ID. Now we have to wait for this task to complete.
-    print("transaction_signature", transaction_signature)
+        # We get a task ID. Now we have to wait for this task to complete.
+        print("transaction_signature", transaction_signature)
 
-    # The transaction takes about 30-60 seconds to confirm...
-    # Check out this Gist for how to formally check confirmation status:
-    # https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d
-    print("Sleeping for 30 seconds while the transaction is confirmed.")
-    time.sleep(30)
+        # The transaction takes about 30-60 seconds to confirm...
+        # Check out this Gist for how to formally check confirmation status:
+        # https://gist.github.com/joshwolff1/298e8251e43ff9b4815028683b1ca17d
+        print("Sleeping for 30 seconds while the transaction is confirmed.")
+        time.sleep(30)
 
-    transaction_info = BLOCKCHAIN_API_RESOURCE.get_solana_transaction(
-        tx_signature=transaction_signature,
-        network=SolanaNetwork.DEVNET
-    )
-    print(transaction_info)
-    did_succeed = transaction_info['result']['meta']['err'] is None
-    print(f"Did the tx succeed? {did_succeed}")
+        transaction_info = BLOCKCHAIN_API_RESOURCE.get_solana_transaction(
+            tx_signature=transaction_signature,
+            network=SolanaNetwork.DEVNET
+        )
+        print(transaction_info)
+        did_succeed = transaction_info['result']['meta']['err'] is None
+        print(f"Did the tx succeed? {did_succeed}")
 
-    url_to_view = f"https://explorer.solana.com/tx/{transaction_signature}?cluster={network.value}"
-    print(f"You can view the transaction here: {url_to_view}")
+        url_to_view = f"https://explorer.solana.com/tx/{transaction_signature}?cluster={network.value}"
+        print(f"You can view the transaction here: {url_to_view}")
 
 
 def minting_bot():
