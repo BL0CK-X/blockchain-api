@@ -123,6 +123,11 @@ def get_instructions():
                 "mint_address": "5VtKwrFuLv3LCKMnDtCpHaj978sF1zdjTkihovRLuj6m"
             }
         ),
+        # ______________________________________________________________________
+        #           MAKE SURE TO ENTER YOUR API KEY PAIR HERE
+        #   Get one:
+        #   https://dashboard.blockchainapi.com?2d9UPbepdAmCwqJ5cExy#api-keys
+        # ______________________________________________________________________
         headers={
             "APIKeyId": "INSERT-YOUR-API-KEY-ID",
             "APISecretKey": "INSERT-YOUR-API-SECRET-KEY"
