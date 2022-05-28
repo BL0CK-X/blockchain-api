@@ -1,14 +1,15 @@
 import theblockchainapi from 'theblockchainapi';
 
 let defaultClient = theblockchainapi.ApiClient.instance;
-
-// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
-
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = null;
-
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = null;
+
+// BEGIN: -----------------------------------------------------------------------------------------------
+// TODO:- Fill in with your own API Keys
+// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
+APIKeyID.apiKey = 'API-KEY-ID';
+APISecretKey.apiKey = 'API-SECRET-KEY';
+// END:   -----------------------------------------------------------------------------------------------
 
 const get_is_nft = async (public_key, network, title) =>  {
     let apiInstance = new theblockchainapi.SolanaAccountApi();

@@ -1,14 +1,15 @@
 import theblockchainapi from 'theblockchainapi';
 
 let defaultClient = theblockchainapi.ApiClient.instance;
-
-// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
-
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-KEY-ID';
-
 let APISecretKey = defaultClient.authentications['APISecretKey'];
+
+// BEGIN: -----------------------------------------------------------------------------------------------
+// TODO:- Fill in with your own API Keys
+// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
+APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
+// END:   -----------------------------------------------------------------------------------------------
 
 const get_is_candy_machine = async (public_key, network, title) =>  {
     let apiInstance = new theblockchainapi.SolanaAccountApi();

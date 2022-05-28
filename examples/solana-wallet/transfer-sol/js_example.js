@@ -1,14 +1,15 @@
 import theblockchainapi from 'theblockchainapi';
 
 let defaultClient = theblockchainapi.ApiClient.instance;
-
-// Get a free API Key Pair here: https://dashboard.blockchainapi.com/api-keys
-
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'SmJ4gC0YHEmqLVy';
-
 let APISecretKey = defaultClient.authentications['APISecretKey'];
-APISecretKey.apiKey = 'dIl34hRMTk23Zyi';
+
+// BEGIN: -----------------------------------------------------------------------------------------------
+// TODO:- Fill in with your own API Keys
+// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
+APIKeyID.apiKey = 'API-KEY-ID';
+APISecretKey.apiKey = 'API-SECRET-KEY';
+// END:   -----------------------------------------------------------------------------------------------
 
 let apiInstance = new theblockchainapi.SolanaWalletApi();
 

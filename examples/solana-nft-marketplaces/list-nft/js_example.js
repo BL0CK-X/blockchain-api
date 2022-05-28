@@ -1,14 +1,15 @@
 import theblockchainapi from 'theblockchainapi';
 
 let defaultClient = theblockchainapi.ApiClient.instance;
-
-// Get a free API Key Pair here: https://dashboard.blockchainapi.com/api-keys
-
 let APIKeyID = defaultClient.authentications['APIKeyID'];
-APIKeyID.apiKey = 'API-KEY-ID';
-
 let APISecretKey = defaultClient.authentications['APISecretKey'];
+
+// BEGIN: -----------------------------------------------------------------------------------------------
+// TODO:- Fill in with your own API Keys
+// Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
+APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
+// END:   -----------------------------------------------------------------------------------------------
 
 // (1) Create a new wallet and get a SOL airdrop
 
@@ -110,7 +111,7 @@ getNftOwner(network, mintAddress);
 // (3) List the NFT
 
 let marketplaceApi = new theblockchainapi.SolanaNFTMarketplacesApi();
-let exchange = 'solsea';
+let exchange = 'magic-eden';
 // let exchange = 'magic-eden'; // Uncomment this line to use Magic Eden
 
 let listRequest =  new theblockchainapi.ListRequest() // SolSeaListRequest |
