@@ -25,11 +25,11 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    name = 'vitalik.eth'
+    blockchain_identifier = '0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045'
 
-    blockchain_identifier = BLOCKCHAIN_API_RESOURCE.get_blockchain_identifier_from_name(name)
+    name = BLOCKCHAIN_API_RESOURCE.get_name_from_blockchain_identifier(blockchain_identifier)
 
-    print(f"The address belonging to {name} is {blockchain_identifier}.")
+    print(f"The ENS of `{blockchain_identifier}` is {name}.")
 
 
 if __name__ == '__main__':

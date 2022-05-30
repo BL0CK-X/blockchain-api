@@ -34,7 +34,7 @@ console.log("V1 CANDY MACHINE", result);
 
 
 // V2 candy machine
-request.candy_machine_id = "4m1NuyoW87ZRHByQQ4frWaApbNARNLXjebf59fTcGAv1";
+request.candy_machine_id = "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3";
 request.network = "mainnet-beta";
 request.candy_machine_contract_version = 'v2'; // You have to specify the version. You can find the version here: https://docs.theblockchainapi.com/#operation/solanaGetAccountIsCandyMachine
 

@@ -11,17 +11,16 @@ APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
 // END:   -----------------------------------------------------------------------------------------------
 
-let apiInstance = new theblockchainapi.SolanaNFTApi();
+let apiInstance = new theblockchainapi.TokenApi();
+let blockchain = "solana"; // only supported for Solana
+let network = 'mainnet-beta'; // String | The network of the blockchain you selected  - Solana: `devnet`, `mainnet-beta` - Ethereum: `ropsten`, `mainnet`  Defaults when not provided (not applicable to path parameters): - Solana: `devnet` - Ethereum: `ropsten`
 
-let network = 'mainnet-beta'; // String | The network ID (devnet, mainnet-beta)
-let mintAddress = 'EEr5yQpNXf7Bru6Rt5podx56HGW9CEehXqgRGh2wa71w'; // String | The mint address of the NFT
-
-const result = await apiInstance.solanaGetNFT(network, mintAddress).then((data) => {
+const tokens = await apiInstance.listAllTokens(blockchain, network).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
   console.error(error);
-  return null;
 });
 
-console.log(result);
+console.log("There are", tokens.length, "tokens.")
+console.log(tokens[0]);

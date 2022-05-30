@@ -39,6 +39,8 @@ await get_spl_token("SRMuApVNdxXokk5GT7XD5cUUgXMBCoAz2LHeuAoKWRt", "Serum Token"
 // Get smart contract
 await get_spl_token("TokenkegQfeZyiNwAJbNbGKPFXCWuBvf9Ss623VQ5DA", "Smart Contract", "mainnet-beta")
 
+console.log("You will now receive `Error! Not found or wrong network. Log error for more details.` because these are not SPL tokens.")
+
 // Get candy machine account, v1
 await get_spl_token(
     "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5", "Candy Machine Account: v1", "mainnet-beta"

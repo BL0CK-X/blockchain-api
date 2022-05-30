@@ -9,6 +9,9 @@ let APISecretKey = defaultClient.authentications['APISecretKey'];
 // Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
 APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
+
+APIKeyID.apiKey = 'Om9ifhfY64FOd3g';
+APISecretKey.apiKey = '5ebsYWJuHcyzZCT';
 // END:   -----------------------------------------------------------------------------------------------
 
 ///// Here, we create a new wallet, get an airdrop, and then use the airdrop to mint an NFT.

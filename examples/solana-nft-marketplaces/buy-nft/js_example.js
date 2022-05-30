@@ -117,7 +117,7 @@ let listRequest =  new theblockchainapi.ListRequest() // ListRequest |
 listRequest.wallet = {
   'b58_private_key': b58_private_key
 };
-listRequest.nft_price = 20;  // 20 lamports, NOT SOL
+listRequest.nft_price = 20000;  // 20 lamports, NOT SOL
 let listOpts = {
   'listRequest': listRequest
 };
@@ -138,7 +138,7 @@ getNftOwner(network, mintAddress);
 // (4) BUY AN NFT
 
 let buyRequest =  new theblockchainapi.BuyRequest() // BuyRequest |
-buyRequest.nft_price = 20;  // 20 lamports, NOT SOL
+buyRequest.nft_price = 20000;  // 20 lamports, NOT SOL
 buyRequest.wallet = {
   'b58_private_key': b58_private_key
 };

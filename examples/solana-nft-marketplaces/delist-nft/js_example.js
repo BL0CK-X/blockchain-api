@@ -117,7 +117,7 @@ let listRequest =  new theblockchainapi.ListRequest() // ListRequest |
 listRequest.wallet = {
   'b58_private_key': b58_private_key
 };
-listRequest.nft_price = 20;  // 20 lamports, NOT SOL
+listRequest.nft_price = 20000;  // 20 lamports, NOT SOL
 let listOpts = {
   'listRequest': listRequest
 };

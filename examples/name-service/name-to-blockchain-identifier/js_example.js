@@ -11,12 +11,20 @@ APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
 // END:   -----------------------------------------------------------------------------------------------
 
-let apiInstance = new theblockchainapi.SolanaNFTApi();
+let apiInstance = new theblockchainapi.NameServiceApi();
 
-let network = 'mainnet-beta'; // String | The network ID (devnet, mainnet-beta)
-let mintAddress = 'EEr5yQpNXf7Bru6Rt5podx56HGW9CEehXqgRGh2wa71w'; // String | The mint address of the NFT
+let blockchain = "ethereum"; // String | The blockchain you want to use
+let network = "mainnet"; // or ropsten // String | The network of the blockchain you selected  - Solana: `devnet`, `mainnet-beta` - Ethereum: `ropsten`, `mainnet`  Defaults when not provided (not applicable to path parameters): - Solana: `devnet` - Ethereum: `ropsten`
+let request =  new theblockchainapi.InputName(); // InputName |
+request.name = 'vitalik.eth';
 
-const result = await apiInstance.solanaGetNFT(network, mintAddress).then((data) => {
+let opts = {
+  'inputName': request
+};
+
+const name = await apiInstance.getBlockchainIdentifierFromName(
+    blockchain, network, opts
+).then((data) => {
   console.log('API called successfully.');
   return data;
 }, (error) => {
@@ -24,4 +32,4 @@ const result = await apiInstance.solanaGetNFT(network, mintAddress).then((data) 
   return null;
 });
 
-console.log(result);
+console.log("Name: ", name);

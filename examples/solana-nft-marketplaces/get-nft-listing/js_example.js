@@ -134,7 +134,7 @@ let listRequest =  new theblockchainapi.ListRequest() // ListRequest |
 listRequest.wallet = {
   'b58_private_key': b58_private_key
 };
-listRequest.nft_price = 20;  // 20 lamports, NOT SOL
+listRequest.nft_price = 20000;  // 20 lamports, NOT SOL
 let listOpts = {
   'listRequest': listRequest
 };
@@ -165,23 +165,23 @@ console.log(listingDetails);
 
 // (6) Delist the NFT
 
-let delistRequest =  new theblockchainapi.DelistRequest() // DelistRequest |
-delistRequest.wallet = {
-  'b58_private_key': b58_private_key
-};
-let delistOpts = {
-  'delistRequest': delistRequest
-};
-
-
-result = await marketplaceApi.solanaDelistNFT(network, exchange, mintAddress, delistOpts).then((data) => {
-  console.log('API called successfully.');
-  return data;
-}, (error) => {
-  console.error(error);
-  return null;
-});
-
-console.log(result);
-console.log("We are the owner again.")
-getNftOwner(network, mintAddress);
+//let delistRequest =  new theblockchainapi.DelistRequest() // DelistRequest |
+//delistRequest.wallet = {
+//  'b58_private_key': b58_private_key
+//};
+//let delistOpts = {
+//  'delistRequest': delistRequest
+//};
+//
+//
+//result = await marketplaceApi.solanaDelistNFT(network, exchange, mintAddress, delistOpts).then((data) => {
+//  console.log('API called successfully.');
+//  return data;
+//}, (error) => {
+//  console.error(error);
+//  return null;
+//});
+//
+//console.log(result);
+//console.log("We are the owner again.")
+//getNftOwner(network, mintAddress);

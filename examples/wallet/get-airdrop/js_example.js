@@ -139,7 +139,7 @@ for (let i = 0; i < max_attempts; i++) {
         console.log("Waiting for transaction to become final.... Attempt #" + string(i) + " of " + max_attempts);
         await new Promise(r => setTimeout(r, 90000));
     } else {
-        console.log(data);
+        console.log(tx);
         break;
     }
 }
