@@ -1,13 +1,13 @@
-from theblockchainapi import TheBlockchainAPIResource, \
-    SolanaNetwork, SolanaCurrencyUnit, SolanaCandyMachineContractVersion, SolanaWallet, DerivationPath
+from theblockchainapi import SolanaAPIResource, \
+    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet, DerivationPath
 import time
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -42,38 +42,27 @@ def example():
     print(BLOCKCHAIN_API_RESOURCE.get_balance(public_key, SolanaCurrencyUnit.SOL, network))
 
     # Creates a test candy machine with 5 available to mint
+
     # NOTE: This endpoint is unstable. It is only meant for testing purposes.
     candy_machine_id = BLOCKCHAIN_API_RESOURCE.create_test_candy_machine(
         wallet=wallet,
         network=network,
         # include_gatekeeper=True,  # including gatekeeper will cause the tx to NOT succeed
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
     )
+    # candy_machine_id = '8uyxEUyZMGYHUgeHZGUfhRCht2bnsuXBpyrEsShRMTZA'
 
     print("candy_machine_id", candy_machine_id)
     url_to_view = f"https://explorer.solana.com/address/{candy_machine_id}?cluster={network.value}"
     print("View candy machine here:", url_to_view)
-
-    # Now get the config_address of the candy machine
-    candy_details = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
-        candy_machine_id=candy_machine_id,
-        network=network,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
-    )
-    print(candy_details)
-    print("Candy Machine Metadata: ", candy_details)
-    config_address = candy_details['config_address']
-    print("Config Address: ", config_address)
 
     transaction_signatures = list()
 
     for _ in range(10):
         # Now mint an NFT from the candy machine
         transaction_signature = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
-            config_address=config_address,
+            config_address=candy_machine_id,
             wallet=wallet,
-            network=network,
-            candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+            network=network
         )
         transaction_signatures.append(transaction_signature)
 
@@ -120,8 +109,7 @@ def minting_bot():
         task_id = BLOCKCHAIN_API_RESOURCE.mint_from_candy_machine(
             wallet=my_wallet,
             network=SolanaNetwork.DEVNET,
-            config_address="config_address",
-            candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+            config_address="config_address"
         )
         print(task_id)
         end_ = int(time.time())

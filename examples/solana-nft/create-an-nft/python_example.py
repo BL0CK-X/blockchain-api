@@ -1,11 +1,11 @@
 from theblockchainapi import \
-    TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaNFTUploadMethod, SolanaNetwork, DerivationPath, SolanaWallet
+    SolanaAPIResource, SolanaCurrencyUnit, SolanaNFTUploadMethod, SolanaNetwork, DerivationPath, SolanaWallet
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -55,12 +55,39 @@ def example():
     nft = BLOCKCHAIN_API_RESOURCE.create_nft(
         wallet=wallet,
         # mint_to_public_key="GN4VCxyGgCY7gQmiZTn8FXvjEWdXQ7xLGqSjhi2zYWPQ",  # Will transfer NFT to this public key
-        nft_name="The Blockchain API",
-        nft_symbol="BLOCKX",
-        nft_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg",
-        nft_upload_method=SolanaNFTUploadMethod.S3,
+        name="The Blockchain API",
+        symbol="BLOCKX",
         network=SolanaNetwork.DEVNET,
-        nft_description="An NFT of the Blockchain API logo",
+
+        # ---- S3 upload method...
+        image_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg",
+        upload_method=SolanaNFTUploadMethod.S3,
+        description="An NFT of the Blockchain API logo",
+        uri_metadata={
+            "attributes": [
+                {
+                    "trait_type": "fruit",
+                    "value": "yes"
+                },
+                {
+                    "trait_type": "speed",
+                    "value": 100
+                },
+                {
+                    "trait_type": "dead",
+                    "value": "no"
+                }
+            ],
+            "collection": {
+                "name": "BlockchainAPI NFT (Very Rare)",
+                "family": "BlockchainAPI NFTs"
+            }
+        },
+
+        # ---- OR (instead of S3)
+        # uri='',
+        # upload_method=SolanaNFTUploadMethod.URI,
+
         creators=[
             public_key,
             "31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj",

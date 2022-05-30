@@ -1,12 +1,11 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, \
-    SolanaCandyMachineContractVersion, SearchMethod
+from theblockchainapi import SolanaAPIResource, SolanaNetwork, SearchMethod
 import json
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -29,8 +28,7 @@ def example():
     update_authority = "31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj"
     result = BLOCKCHAIN_API_RESOURCE.search_candy_machines(
         update_authority=update_authority,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V1
+        network=SolanaNetwork.MAINNET_BETA
     )
     print_output(result, title=f"Finding candy machines which have the update authority, `{update_authority}`.")
 
@@ -38,15 +36,13 @@ def example():
     result = BLOCKCHAIN_API_RESOURCE.search_candy_machines(
         symbol=symbol,
         symbol_search_method=SearchMethod.BEGINS_WITH,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.MAINNET_BETA
     )
     print_output(result, title=f"Finding candy machines which start with the symbol, `{symbol}`.")
     if len(result) > 0:
         metadata = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
             candy_machine_id=result[0],
-            network=SolanaNetwork.MAINNET_BETA,
-            candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+            network=SolanaNetwork.MAINNET_BETA
         )
         print(json.dumps(metadata, indent=4, sort_keys=True))
 
@@ -54,8 +50,7 @@ def example():
     result = BLOCKCHAIN_API_RESOURCE.search_candy_machines(
         symbol=symbol,
         symbol_search_method=SearchMethod.EXACT_MATCH,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.MAINNET_BETA
     )
     if len(result) > 0:
         print_output(result, title=f"Finding candy machines which have the symbol, `{symbol}`.")
@@ -71,8 +66,7 @@ def example():
         nft_name=nft_name,
         nft_name_index=nft_name_index,
         nft_name_search_method=nft_name_search_method,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.MAINNET_BETA
     )
     print_output(result, title=f"Finding candy machines where the NFT stored at index `{nft_name_index}`"
                                f" begins with the name `{nft_name}`.")
@@ -80,8 +74,7 @@ def example():
     uuid = '3qt9aB'
     result = BLOCKCHAIN_API_RESOURCE.search_candy_machines(
         uuid=uuid,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.MAINNET_BETA
     )
     print_output(result, title=f"Finding candy machines with a uuid `{uuid}`. There should only be one.")
 

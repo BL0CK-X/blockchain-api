@@ -1,11 +1,11 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, \
-    SolanaCurrencyUnit, SolanaCandyMachineContractVersion, SolanaWallet, DerivationPath
+from theblockchainapi import SolanaAPIResource, SolanaNetwork, \
+    SolanaCurrencyUnit, SolanaWallet, DerivationPath
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -45,8 +45,7 @@ def example():
         wallet=wallet,
         # include_gatekeeper=False,  # You can set this to True to include a gatekeeper. Only applies to v2
         # candy machines. When gatekeeper is ON, our mint endpoint doesn't work.
-        network=SolanaNetwork.DEVNET,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.DEVNET
     )
 
     print(candy_machine_id)

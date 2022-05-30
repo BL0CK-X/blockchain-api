@@ -1,11 +1,14 @@
-from theblockchainapi import TheBlockchainAPIResource, \
-    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet, SolanaExchange
+from theblockchainapi import SolanaAPIResource, \
+    SolanaNetwork, SolanaCurrencyUnit, SolanaWallet
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+MY_API_KEY_ID = "KaOKJER4wNwkYkK"
+MY_API_SECRET_KEY = "sMhw2pDhLd9s8Ec"
+
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -19,9 +22,6 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     network = SolanaNetwork.DEVNET
-
-    # exchange = SolanaExchange.SOLSEA
-    exchange = SolanaExchange.MAGIC_EDEN
 
     # Create a new wallet
     wallet = SolanaWallet(
@@ -47,8 +47,8 @@ def example():
     new_nft = BLOCKCHAIN_API_RESOURCE.create_nft(
         wallet=wallet,
         network=network,
-        nft_name="Rich Coin",
-        nft_symbol="WAGMI"
+        name="Rich Coin",
+        symbol="WAGMI"
     )
     mint_address = new_nft['mint']
     print(f"Minted a new NFT with mint address, `{mint_address}`.")
@@ -62,7 +62,6 @@ def example():
         mint_address=mint_address,
         wallet=wallet,
         network=network,
-        exchange=exchange,
         nft_price=nft_price
     )
     print(f"Listed NFT with tx signature: `{listing_tx}`.")
@@ -70,14 +69,13 @@ def example():
     nft_owner = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, network)
     print(f"We no longer hold the NFT because it is held in escrow by: {nft_owner}")
 
-    delisting_tx = BLOCKCHAIN_API_RESOURCE.delist_nft(
+    de_listing_tx = BLOCKCHAIN_API_RESOURCE.delist_nft(
         mint_address=mint_address,
         wallet=wallet,
-        exchange=exchange,
         network=network
     )
 
-    print(f"Delisted NFT with tx signature: `{delisting_tx}`.")
+    print(f"De-listed NFT with tx signature: `{de_listing_tx}`.")
 
     nft_owner = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, network)
     print(f"We now own the NFT again: {nft_owner}")

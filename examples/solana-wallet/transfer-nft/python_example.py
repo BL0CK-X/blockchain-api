@@ -1,10 +1,10 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaWallet, DerivationPath
+from theblockchainapi import SolanaAPIResource, SolanaCurrencyUnit, SolanaWallet, DerivationPath
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -45,9 +45,9 @@ def example():
     # Mint an NFT
     nft = BLOCKCHAIN_API_RESOURCE.create_nft(
         wallet=wallet,
-        nft_name="The Blockchain API",
-        nft_symbol="BLOCKX",
-        nft_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg"
+        name="The Blockchain API",
+        symbol="BLOCKX",
+        image_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg"
     )
     print("NFT: ", nft)
     print(f"You can view the NFT here: {nft['explorer_url']}")
@@ -61,11 +61,11 @@ def example():
         wallet=wallet,
         recipient_address=transfer_to,
         token_address=nft['mint'],
-        fee_payer_wallet=SolanaWallet(
-            b58_private_key='INSERT FEE PAYER PRIVATE KEY',
-            # private_key='',  # Or one of these other options
-            # secret_recovery_phrase=''  # Or one of these other options
-        )
+        # fee_payer_wallet=SolanaWallet(
+        #     b58_private_key='INSERT FEE PAYER PRIVATE KEY',
+        #     private_key='',  # Or one of these other options
+        #     secret_recovery_phrase=''  # Or one of these other options
+        # )
     )
     print("Transferred!")
     print(f"You can view the transaction here: https://explorer.solana.com/tx/{transaction_signature}?cluster=devnet")

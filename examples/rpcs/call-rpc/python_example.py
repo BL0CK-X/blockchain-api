@@ -28,17 +28,23 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    if BLOCKCHAIN.value == Blockchain.SOLANA.value:
-        # This is the transaction signature for a transaction that lists an NFT on SolSea.
-        # From `mainnet-beta`
-        tx_id = "5H7o5YND5X7q4RgtKpmawqR9S7WuUwdnzj2uA5B7vCUvvVQVgNzk1CgMyH3duDXsapCcNgKufAeMZrijWaThCj9T"
-    else:
-        # From `ropsten`
-        tx_id = '0x2e81c50888bb80f763fb52870240fdad2fa87a8e95c8c729367c9f145fb85b59'
+    rpc_url = BLOCKCHAIN_API_RESOURCE.get_rpc_url()
 
-    transaction_info = BLOCKCHAIN_API_RESOURCE.get_transaction(transaction_blockchain_identifier=tx_id)
+    print(
+        f"You can use this RPC URL for `{BLOCKCHAIN.value}`, `{NETWORK.value}`; "
+        f"but make sure to include your API keys in the headers. \n\n {rpc_url}"
+    )
 
-    print(json.dumps(transaction_info, indent=4, sort_keys=True))
+    rpc_response = BLOCKCHAIN_API_RESOURCE.make_rpc_request(
+        method='getBlockTime',
+        params=[
+            135659086
+        ]
+    )
+
+    # In progress....
+    print(rpc_response)
+    print(json.dumps(rpc_response, indent=4))
 
 
 if __name__ == '__main__':

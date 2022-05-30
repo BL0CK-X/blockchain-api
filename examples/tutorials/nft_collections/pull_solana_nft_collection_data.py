@@ -1,4 +1,4 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SearchMethod
+from theblockchainapi import SolanaAPIResource, SolanaNetwork, SearchMethod, Blockchain, BlockchainNetwork
 from collections import defaultdict
 import json
 from concurrent.futures import ThreadPoolExecutor
@@ -6,7 +6,8 @@ from concurrent.futures import ThreadPoolExecutor
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )

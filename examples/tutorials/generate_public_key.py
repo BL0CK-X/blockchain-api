@@ -1,10 +1,10 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaWallet
+from theblockchainapi import SolanaAPIResource, SolanaWallet
 from concurrent.futures import ThreadPoolExecutor
 import time
 
 
 # Get an API key pair here: https://dashboard.blockchainapi.com/#api-keys
-RESOURCE = TheBlockchainAPIResource(
+RESOURCE = SolanaAPIResource(
     api_key_id=None,
     api_secret_key=None
 )

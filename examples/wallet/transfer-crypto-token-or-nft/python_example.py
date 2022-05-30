@@ -1,12 +1,37 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaCurrencyUnit, SolanaNetwork, SolanaWallet, DerivationPath
+from theblockchainapi import BlockchainAPIResource, Blockchain, BlockchainNetwork, Wallet, CurrencyUnit
+import time
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN = Blockchain.SOLANA
+NETWORK = BlockchainNetwork.SolanaNetwork.DEVNET
+# NETWORK = BlockchainNetwork.SolanaNetwork.MAINNET_BETA
+
+# BLOCKCHAIN = Blockchain.ETHEREUM
+# NETWORK = BlockchainNetwork.EthereumNetwork.MAINNET
+# NETWORK = BlockchainNetwork.EthereumNetwork.ROPSTEN
+
+# ------ If using Solana..
+DERIVATION_PATH = 'm/44/501/0/0'  # Used for Phantom, Sollet
+# You can increment it for the next wallet in Phantom (e.g., what happens when you create a new wallet)
+# DERIVATION_PATH = 'm/44/501/1/0'
+# DERIVATION_PATH = None  # Defaults to 'm/44/501/0/0'
+# DERIVATION_PATH = ""  # Use this if you created the wallet via the CLI
+
+UNIT = CurrencyUnit.SolanaCurrencyUnit.SOL
+
+# ------ If using Ethereum..
+DERIVATION_PATH = None  # Use `None` for Metamask, the default
+
+UNIT = CurrencyUnit.EthereumCurrencyUnit.ETH
+
+BLOCKCHAIN_API_RESOURCE = BlockchainAPIResource(
     api_key_id=MY_API_KEY_ID,
-    api_secret_key=MY_API_SECRET_KEY
+    api_secret_key=MY_API_SECRET_KEY,
+    blockchain=BLOCKCHAIN,
+    network=NETWORK
 )
 
 
@@ -18,30 +43,34 @@ def example():
         raise Exception("Fill in your key ID pair!")
 
     # Create a wallet
-    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_secret_key()
-    wallet = SolanaWallet(
+    secret_recovery_phrase = BLOCKCHAIN_API_RESOURCE.generate_seed_phrase()
+    wallet = Wallet(
         secret_recovery_phrase=secret_recovery_phrase,
-        derivation_path=DerivationPath.CLI_PATH,
+        derivation_path=DERIVATION_PATH,
         passphrase=str(),
         private_key=None,  # OR You can supply this instead. e.g, [11, 234, ... 99, 24]
         b58_private_key=None  # OR You can supply this instead. e.g, x12x0120jd ... 192j0eds
     )
-    public_key = BLOCKCHAIN_API_RESOURCE.derive_public_key(wallet=wallet)
-    print(f"Public Key: {public_key}")
+    blockchain_identifier = BLOCKCHAIN_API_RESOURCE.derive_blockchain_identifier(wallet=wallet)
+    print(f"Blockchain Identifier: {blockchain_identifier}")
     print(f"Secret Recovery Phrase: {secret_recovery_phrase}")
 
-    # Get an airdrop on the devnet in order to be able to transfer SOL
-    BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
+    if BLOCKCHAIN.value == Blockchain.SOLANA.value:
+        n_airdrops = 1
+    else:
+        n_airdrops = 3
 
-    # We need to make sure this has time to process before transferring SOL
-    import time
-    time.sleep(25)
+    for _ in range(n_airdrops):
+        # Get an airdrop on the devnet in order to be able to transfer SOL
+        result = BLOCKCHAIN_API_RESOURCE.get_airdrop(blockchain_identifier)
+        print(result)
+        # We need to make sure this has time to process before transferring
+        time.sleep(45)
 
     def get_balance():
         balance_result = BLOCKCHAIN_API_RESOURCE.get_balance(
-            public_key,
-            unit=SolanaCurrencyUnit.SOL,
-            network=SolanaNetwork.DEVNET
+            blockchain_identifier,
+            unit=UNIT
         )
         print(f"Balance: {balance_result['balance']}")
 
@@ -66,23 +95,31 @@ def example():
     transfer_to = "8UmhEzc1CGkYazNQcGHvAAgTw9vy8mfBb5z4huyeftxc"
 
     # Call the transfer endpoint
-    transaction_signature = BLOCKCHAIN_API_RESOURCE.transfer(
+    response = BLOCKCHAIN_API_RESOURCE.transfer(
+
         wallet=wallet,
-        recipient_address=transfer_to,
+
+        recipient_blockchain_identifier=transfer_to,
         amount=amount_to_send,
-        network=SolanaNetwork.DEVNET,
+
+        token_blockchain_identifier=None
 
         # Set the fee payer if you want someone else to pay the fee.
         # fee_payer_wallet=SolanaWallet(b58_private_key='INSERT FEE PAYER PRIVATE KEY'),
 
         # If you don't want to send private keys, define the `sender_public_key` and set `return_compiled_transaction`
         # to `True`. This will return instructions that you can sign and then send as a transaction.
-        # sender_public_key='insert public key',
+        # sender_blockchain_identifier=blockchain_identifier,
         # return_compiled_transaction=True  # default is False
+        # If return_compiled_transaction==True, then set `wallet=None`
     )
+    result = response['transaction_blockchain_identifier']
 
     print("Transferred!")
-    print(f"You can view the transaction here: https://explorer.solana.com/tx/{transaction_signature}?cluster=devnet")
+    if BLOCKCHAIN.value == Blockchain.SOLANA.value:
+        print(f"View Transaction: https://explorer.solana.com/tx/{result}?cluster=devnet")
+    else:
+        print(f"View Transaction: https://ropsten.etherscan.io/tx/{result}")
 
     # The output of this `get_balance()` call should be `airdrop_amount` less
     # than the previous output of `get_balance()`

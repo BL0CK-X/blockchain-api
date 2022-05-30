@@ -1,11 +1,11 @@
-from theblockchainapi import TheBlockchainAPIResource, SolanaNetwork, SolanaCandyMachineContractVersion
+from theblockchainapi import SolanaAPIResource, SolanaNetwork
 import json
 
-# Get an API key pair for free here: https://dashboard.blockchainapi.com/
+# Get an API key pair for free here: https://dashboard.blockchainapi.com/api-keys
 MY_API_KEY_ID = None
 MY_API_SECRET_KEY = None
 
-BLOCKCHAIN_API_RESOURCE = TheBlockchainAPIResource(
+BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
     api_secret_key=MY_API_SECRET_KEY
 )
@@ -18,21 +18,10 @@ def example():
     except AssertionError:
         raise Exception("Fill in your key ID pair!")
 
-    candy_machine_id_v1 = "9htmDvW58pjCMQdjFbovo8cGBZviDfeP3j7DKnikHEy5"
-    metadata = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
-        candy_machine_id=candy_machine_id_v1,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V1
-    )
-    print(f"Metadata of a v1 Candy Machine")
-    print(json.dumps(metadata, indent=4, sort_keys=True))
-    print("-" * 20)
-
     candy_machine_id_v2 = "BdgRfRzzFEWTa7Ka5bzWEy1QidSc5qVvn8zq7vRBrDL3"
     metadata = BLOCKCHAIN_API_RESOURCE.get_candy_machine_metadata(
         candy_machine_id=candy_machine_id_v2,
-        network=SolanaNetwork.MAINNET_BETA,
-        candy_machine_contract_version=SolanaCandyMachineContractVersion.V2
+        network=SolanaNetwork.MAINNET_BETA
     )
     print(f"Metadata of a v2 Candy Machine")
     print(json.dumps(metadata, indent=4, sort_keys=True))
