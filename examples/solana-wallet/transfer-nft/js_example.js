@@ -105,6 +105,7 @@ nftMintRequest.wallet = {
 };
 nftMintRequest.nft_name = 'Blockchain API NFT'
 nftMintRequest.nft_symbol = 'BLOCKX'
+nftMintRequest.wait_for_confirmation = true;
 
 opts = {
   'nFTMintRequest': nftMintRequest // NFTMintRequest | 
@@ -133,6 +134,7 @@ transfer_request.wallet = {
 //    'derivation_path': '', // We're using the defaults.
 //    'passphrase': '' // We're using the defaults.
 };
+transfer_request.wait_for_confirmation = false; // see more about this parameter in the docs
 //transfer_request['fee_payer_wallet'] = {
 //    'b58_private_key': 'INSERT-PRIVATE-KEY' // or other wallet method authentication
 //};
@@ -143,7 +145,7 @@ transfer_request.network = 'devnet';
 const tx_sig = await apiInstance.solanaTransfer({
         'transferRequest': transfer_request
     }).then((data) => {
-    console.log('API called successfully.');
+    console.log('API called successfully.', data);
     return data['transaction_signature'];
 }, (error) => {
     console.error(error);

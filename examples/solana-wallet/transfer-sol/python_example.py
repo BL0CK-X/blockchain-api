@@ -33,10 +33,6 @@ def example():
     # Get an airdrop on the devnet in order to be able to transfer SOL
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
 
-    # We need to make sure this has time to process before transferring SOL
-    import time
-    time.sleep(25)
-
     def get_balance():
         balance_result = BLOCKCHAIN_API_RESOURCE.get_balance(
             public_key,
@@ -71,6 +67,7 @@ def example():
         recipient_address=transfer_to,
         amount=amount_to_send,
         network=SolanaNetwork.DEVNET,
+        wait_for_confirmation=True  # See more in the docs.
 
         # Set the fee payer if you want someone else to pay the fee.
         # fee_payer_wallet=SolanaWallet(b58_private_key='INSERT FEE PAYER PRIVATE KEY'),

@@ -4,8 +4,8 @@ import json
 from concurrent.futures import ThreadPoolExecutor
 
 # Get an API key pair for free here: https://dashboard.blockchainapi.com/
-MY_API_KEY_ID = None
-MY_API_SECRET_KEY = None
+MY_API_KEY_ID = 'AbSox7LJV3klHJe'
+MY_API_SECRET_KEY = '6OwvgukfqH2GpXc'
 
 BLOCKCHAIN_API_RESOURCE = SolanaAPIResource(
     api_key_id=MY_API_KEY_ID,
@@ -55,9 +55,16 @@ def pull_mint_stats():
 
     owners = defaultdict(int)
 
-    with open("smb_mint_addresses.json", "rb+") as fp:
-        # with open("0euvre_mint_addresses.json", "rb+") as fp:
-        mint_addresses = json.loads(fp.read())
+    with open("the_founders.json", "rb+") as fp:
+
+        # mint_addresses = json.loads(fp.read())
+
+        nfts = json.loads(fp.read().decode())
+        mint_addresses = list()
+        for nft in nfts:
+            mint_addresses.append(nft['nft_metadata']['mint'])
+
+        print(len(mint_addresses))
 
     executor = ThreadPoolExecutor(max_workers=20)
     tasks = list()
@@ -74,15 +81,15 @@ def pull_mint_stats():
             try:
                 owner_ = BLOCKCHAIN_API_RESOURCE.get_nft_owner(mint_address, SolanaNetwork.MAINNET_BETA)
 
-                # noinspection PyBroadException
-                try:
-                    listing = BLOCKCHAIN_API_RESOURCE.get_nft_listing(mint_address, SolanaNetwork.MAINNET_BETA)
-                    if 'seller' in listing:
-                        owner_ = listing['seller']
-                    prices.append(listing['price'])
-                    exchange_listings[listing['exchange_readable']].add(mint_address)
-                except Exception as e:
-                    print(e, mint_address)
+                # # noinspection PyBroadException
+                # try:
+                #     listing = BLOCKCHAIN_API_RESOURCE.get_nft_listing(mint_address, SolanaNetwork.MAINNET_BETA)
+                #     if 'seller' in listing:
+                #         owner_ = listing['seller']
+                #     prices.append(listing['price'])
+                #     exchange_listings[listing['exchange_readable']].add(mint_address)
+                # except Exception as e:
+                #     print(e, mint_address)
 
                 owners[owner_] += 1
             except Exception as e:
@@ -105,10 +112,12 @@ def pull_mint_stats():
     print("-" * 50)
     for owner, count in owners.items():
         print(owner, count)
+
     print("-" * 50)
     top_ten_owners = sorted(owners, key=owners.get, reverse=True)[:10]
     print(f"Number of Unique Owners: {len(set(owners.keys()))}")
     print("Top 10 Owners")
+    # 1BWutmTvYPwDtmw9abTkS4Ssr8no61spGAvW1X6NDix
     for owner in top_ten_owners:
         print(f"{owner} owns {owners[owner]} Money Boys.")
 
@@ -133,11 +142,13 @@ def pull_mint_stats():
 
 
 if __name__ == '__main__':
-    # pull_mint_addresses()
-    import time
-    start = int(time.time())
-    print("START:", start)
+
     pull_mint_stats()
-    end = int(time.time())
-    print("END:", end)
-    print(f"TOOK {end - start} SECONDS")
+    # pull_mint_addresses()
+    # import time
+    # start = int(time.time())
+    # print("START:", start)
+    # pull_mint_stats()
+    # end = int(time.time())
+    # print("END:", end)
+    # print(f"TOOK {end - start} SECONDS")

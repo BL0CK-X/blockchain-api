@@ -100,6 +100,7 @@ transfer_request.wallet = {
 // transfer_request.passphrase = ''; // We're using the defaults.
 // transfer_request.token_address = ...; // Don't provide when transferring SOL.
 transfer_request.network = 'devnet';
+transfer_request.wait_for_confirmation = true; // If you put `false`, you'll see that the following call to "get_balance" returns an unchanged balance. That's be cause the transaction was not yet confirmed. The balance will only update after the transaction was confirmed.
 transfer_request.amount = '0.014'; // The airdrop was 0.015, but we need to send a little less to pay for the transaction.
 
 const tx_sig = await apiInstance.solanaTransfer({

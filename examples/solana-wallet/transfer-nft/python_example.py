@@ -34,8 +34,7 @@ def example():
     BLOCKCHAIN_API_RESOURCE.get_airdrop(public_key)
 
     # We need to make sure this has time to process before minting the NFT!
-    import time
-    time.sleep(25)
+    print("Received airdrop...")
 
     def get_balance():
         balance_result = BLOCKCHAIN_API_RESOURCE.get_balance(public_key, unit=SolanaCurrencyUnit.SOL)
@@ -47,7 +46,8 @@ def example():
         wallet=wallet,
         name="The Blockchain API",
         symbol="BLOCKX",
-        image_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg"
+        image_url="https://pbs.twimg.com/profile_images/1441903262509142018/_8mjWhho_400x400.jpg",
+        wait_for_confirmation=True  # See more in the docs.
     )
     print("NFT: ", nft)
     print(f"You can view the NFT here: {nft['explorer_url']}")
@@ -61,6 +61,7 @@ def example():
         wallet=wallet,
         recipient_address=transfer_to,
         token_address=nft['mint'],
+        wait_for_confirmation=False  # See more in the docs.
         # fee_payer_wallet=SolanaWallet(
         #     b58_private_key='INSERT FEE PAYER PRIVATE KEY',
         #     private_key='',  # Or one of these other options

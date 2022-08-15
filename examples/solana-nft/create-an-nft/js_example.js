@@ -9,9 +9,6 @@ let APISecretKey = defaultClient.authentications['APISecretKey'];
 // Get a free API Key Pair: https://dashboard.blockchainapi.com/api-keys
 APIKeyID.apiKey = 'API-KEY-ID';
 APISecretKey.apiKey = 'API-SECRET-KEY';
-
-APIKeyID.apiKey = 'Om9ifhfY64FOd3g';
-APISecretKey.apiKey = '5ebsYWJuHcyzZCT';
 // END:   -----------------------------------------------------------------------------------------------
 
 ///// Here, we create a new wallet, get an airdrop, and then use the airdrop to mint an NFT.
@@ -91,8 +88,6 @@ console.log(airdrop_request);
 await getBalance();
 
 // Now mint the NFT
-// We need to make sure the airdrops have time to process before minting the NFT!
-await new Promise(r => setTimeout(r, 30000));
 
 let nftApiInstance = new theblockchainapi.SolanaNFTApi();
 
@@ -102,6 +97,7 @@ const nftMintRequest = new theblockchainapi.NFTMintRequest(); // NFTMintRequest
 nftMintRequest.secret_recovery_phrase = new_seed_phrase;
 nftMintRequest.nft_name = 'Blockchain API NFT'
 nftMintRequest.nft_symbol = 'BLOCKX'
+nftMintRequest.wait_for_confirmation = false;
 // nftMintRequest.mint_to_public_key = "GN4VCxyGgCY7gQmiZTn8FXvjEWdXQ7xLGqSjhi2zYWPQ";  // Will transfer NFT to this public key
 
 opts = {
