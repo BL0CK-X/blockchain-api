@@ -4,13 +4,14 @@
         <title>EXAMPLE</title>
         <link rel="icon" type="image/png" href="https://theblockchainapi-dashboard.s3.amazonaws.com/favicon.ico"/>
 
-        <script src="https://unpkg.com/@solana/web3.js@latest/lib/index.iife.min.js"></script>
+        <script src="https://unpkg.com/@solana/web3.js@1.41.3/lib/index.iife.min.js"></script>
+        <script src="https://unpkg.com/base-58@0.0.1/Base58.js"></script>
     </head>
 
     <body style="font-family: Arial">
 
     <h1 >
-        Let's test transferring Solana.
+        Let's test transferring an NFT on Solana.
     </h1>
 
     <h3>
@@ -26,8 +27,11 @@
     <p>
         (Be patient! This takes a few seconds.)
     </p>
+    <p>
+        (Replace the mint address in the script tag with an NFT you own.)
+    </p>
     <button onclick={transfer()}>
-        Transfer 0.001 SOL
+        Transfer 1 NFT
     </button>
 
     <script>
@@ -58,19 +62,52 @@
 
         const sendRequest = async (transactionData) => {
 
-            const network = "https://api.mainnet-beta.solana.com/";
+            // const network = "https://api.mainnet-beta.solana.com/";
+            const network = "https://rpc.ankr.com/solana";
             const connection = new solanaWeb3.Connection(network);
 
             try {
 
                 const { signature } = await window.solana.request({
 
-                    method: "signAndSendTransaction",
+                    method: "signTransaction",
                     params: {
                          message: transactionData,
                     },
 
                 })
+
+                console.log("6");
+
+                const message = solanaWeb3.Message.from(transactionData);
+                console.log("5");
+                const tx = solanaWeb3.Transaction.populate(message);
+
+                console.log("4");
+
+                const bin = Base58.decode(signature)
+
+                console.log("3");
+
+                const resp = await window.solana.connect();
+                // resp.publicKey.toString()
+                tx.signature = bin;
+                tx.feePayer = resp.publicKey;
+                // tx.setSigners([resp.publicKey]);
+                console.log("Tx signers", tx.signers);
+                // tx.signatures = [
+                //     signature
+                // ]
+                // tx.addSignature(
+                //     resp.publicKey,
+                //     bin
+                // );
+                console.log("2");
+
+                solanaWeb3.sendAndConfirmTransaction(
+                    connection, tx
+                )
+                console.log("1");
 
                 console.log("Signature! signature", signature);
 
@@ -94,20 +131,20 @@
 
             const resp = await window.solana.connect();
 
-            fetch("https://api.blockchainapi.com/v1/solana/wallet/transfer", {
+            fetch("http://localhost:8080/v1/solana/wallet/transfer", {
 
                 method: "POST",
 
                 // Do NOT put your keys in a *public* HTML file. This is ONLY for testing purposes.
                 headers: {
                     'Content-Type': 'application/json',
-                    'APIKeyId': 'ZCivqw7brOYvtof', // INSERT-API-KEY-ID
-                    'APISecretKey': '1w2c4nvr2m5eQ9r' // INSERT-API-SECRET-KEY
+                    'APIKeyId': 'lUgo40aCb2az51z', // INSERT-API-KEY-ID
+                    'APISecretKey': 'xl2Iy7AzqTdJQZ3' // INSERT-API-SECRET-KEY
                 },
 
                 body: JSON.stringify({
                         'sender_public_key': resp.publicKey.toString(),
-                        'recipient_address': 'EW3nXn7X4NTWFKWaJgxKrFNoTSkop1cBUVHA21zrfF6u',
+                        'recipient_address': '31LKs39pjT5oj6fWjC3F76dHWf9489asCthmgj8wu7pj',
                         'return_compiled_transaction': true,
                         'amount': '1',
                         // Make sure you own the NFT
